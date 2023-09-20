@@ -17,7 +17,7 @@ class T2001 extends Migration
             $table->string('nome', 255);
             $table->tinyInteger('situacao')->default(1);
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
