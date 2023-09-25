@@ -42,10 +42,10 @@ export default function RegisterProduct({ auth }: PageProps) {
             });
 
             setValue(formattedValue);
-            setData('value', formattedValue)
+            setData('value', value);
         } else {
             setValue('');
-            setData('value', '')
+            setData('value', '');
         }
     };
 
@@ -96,10 +96,10 @@ export default function RegisterProduct({ auth }: PageProps) {
                                 id="value"
                                 type="text"
                                 name="value"
-                                value={data.value}
+                                value={value}
                                 className="mt-1 block w-full"
                                 onChange={handleChange}
-                                placeholder="R$ 0.00"
+                                placeholder="R$0.00"
                                 required
                             />
 
