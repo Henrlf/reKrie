@@ -1,0 +1,19 @@
+@import "../node_modules/bootstrap/scss/functions";
+
+$container-max-width: 2000px;
+
+//$theme-colors-bg-subtle-dark: (
+//    "primary": #37ff00,
+//);
+
+//$theme-colors: (
+//    "primary": #37ff00,
+//    "light": #ff4136
+//);
+
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+@import "../node_modules/bootstrap/scss/navbar";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/buttons";
