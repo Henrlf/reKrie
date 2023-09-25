@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +34,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+//Products
+Route::get('/register-product', function () {
+    return Inertia::render('Product/RegisterProduct');
+})->middleware(['auth', 'verified'])->name('product.register');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/products', [ProductController::class, 'findAll'])->name('products.findAll');
+    Route::post('/products', [ProductController::class, 'create'])->name('products.create');
+    Route::delete('/products', [ProductController::class, 'delete'])->name('products.delete');
 });
 
 require __DIR__.'/auth.php';
