@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Product\ProductCreateRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -19,7 +20,7 @@ class ProductController extends Controller
             'idMaterial' => 1,
             'nome' => $request->input('name'),
             'descricao' => $request->input('description'),
-            'imagem' => 'https://static.vecteezy.com/system/resources/previews/026/552/880/original/wooden-comfortable-chair-isolated-on-transparent-background-ai-generated-png.png',
+            'imagem' => 'https://w7.pngwing.com/pngs/592/699/png-transparent-coffee-tables-rustic-furniture-log-furniture-table-furniture-drawer-coffee-tables.png',
             'largura' => 40.0,
             'altura' => 120.00,
             'comprimento' => 45.0,
@@ -28,9 +29,13 @@ class ProductController extends Controller
             'valor' => $request->input('value'),
             'situacao' => true
         ];
-
+     
         $product = Product::create($mappedData);
-
+        $product->findAll();
         return Redirect::route('dashboard');
+    }
+
+    public static function findAll() {
+        return DB::table('produto')->get()->toArray();
     }
 }

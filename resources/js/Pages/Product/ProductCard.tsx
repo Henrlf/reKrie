@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     return (
         <a
             href={link}
-            className="scale-100 p-6 bg-white from-gray-700/50 via-transparent rounded-lg shadow-2xl shadow-gray-500/20 flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+            className="scale-100 p-6 bg-white from-gray-700/50 via-transparent rounded-lg shadow-2xl shadow-gray-500/20 flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-green-700"
         >
             <div>
                 <div className="h-40 w-40 bg-green-900/20 flex items-center justify-center rounded-full">
