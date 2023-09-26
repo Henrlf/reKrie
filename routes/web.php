@@ -20,9 +20,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'canRegister' => Route::has('register')
     ]);
 });
 
@@ -41,8 +39,9 @@ Route::get('/register-product', function () {
     return Inertia::render('Product/RegisterProduct');
 })->middleware(['auth', 'verified'])->name('product.register');
 
+//Route::get('/products', [ProductController::class, 'findAll'])->name('products.findAll');
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/products', [ProductController::class, 'findAll'])->name('products.findAll');
     Route::post('/products', [ProductController::class, 'create'])->name('products.create');
     Route::delete('/products', [ProductController::class, 'delete'])->name('products.delete');
 });
