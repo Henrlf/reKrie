@@ -7,7 +7,7 @@ export default function Welcome({ auth, products }: PageProps<{ products: any }>
     return (
         <>
             <Head title="Bem-vindo" />
-            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 selection:bg-red-500 selection:text-white">
+            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 selection:bg-green-800 selection:text-white">
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
                     {auth.user ? (
                         <Link
@@ -53,13 +53,15 @@ export default function Welcome({ auth, products }: PageProps<{ products: any }>
 
                     <div className="mt-16">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                            <ProductCard
-                                title="Cadeira rustica"
-                                price="R$ 120.00"
-                                description="Adicione charme e conforto à sua casa com nossa cadeira rústica de madeira. Feita à mão com madeira de alta qualidade, esta cadeira combina elegância e durabilidade. Perfeita para criar um ambiente acolhedor em qualquer espaço."
-                                imageUrl="https://static.vecteezy.com/system/resources/previews/026/552/880/original/wooden-comfortable-chair-isolated-on-transparent-background-ai-generated-png.png"
-                                link="https://laravel.com/docs"
-                            />
+                            {products.map((product: any) => 
+                                <ProductCard
+                                    title={product.nome}
+                                    price={"R$ "+product.valor}
+                                    description={product.descricao}
+                                    imageUrl={product.imagem}
+                                    link="https://laravel.com/docs"
+                                />
+                            )}
                         </div>
                     </div>
 
