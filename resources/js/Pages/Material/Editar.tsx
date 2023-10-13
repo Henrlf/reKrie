@@ -10,10 +10,10 @@ import {Id, toast} from "react-toastify";
 
 export default function Adicionar({auth, material}: PageProps<{ material: any }>) {
     const {data, setData, put, processing, errors, reset} = useForm({
-        id: '',
-        nome: '',
-        descricao: '',
-        situacao: ''
+        id: material.id,
+        nome: material.nome,
+        descricao: material.descricao,
+        situacao: material.situacao
     });
 
     const [validated, setValidated] = useState(false);

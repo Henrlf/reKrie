@@ -33,7 +33,7 @@ Route::get('/material/editar/{id}', function ()
 {
     $id = request()->route()->parameter('id');
     return Inertia::render('Material/Editar', ['material' => \App\Models\Material::findOneById($id)]);
-})->middleware(['auth', 'verified'])->name('material.editar.{id}');
+})->middleware(['auth', 'verified'])->name('material.editar');
 
 Route::middleware(['auth', 'verified'])->group(function ()
 {

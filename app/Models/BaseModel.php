@@ -17,7 +17,7 @@ class BaseModel extends Model
         {
             $model = new $class;
 
-            return DB::table($model->table)->get();
+            return DB::table($model->table)->orderBy('updated_at', 'DESC')->get();
         }
 
         return null;
