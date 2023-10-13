@@ -25,7 +25,7 @@ export default function RegisterProduct({ auth }: PageProps) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('products.create'));
+        post(route('produtos.create'));
     };
 
     const [value, setValue] = useState<string>('');
@@ -53,7 +53,9 @@ export default function RegisterProduct({ auth }: PageProps) {
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Registrar produto</h2>}>
+
             <Head title="Registrar produto" />
+
             <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
                 <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                     <form onSubmit={submit}>

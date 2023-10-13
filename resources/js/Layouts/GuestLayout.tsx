@@ -1,19 +1,50 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
-import { PropsWithChildren } from 'react';
+import React, {PropsWithChildren} from 'react';
+import {Button, ButtonGroup, Nav, Navbar, Container} from "react-bootstrap";
+import {ToastContainer} from "react-toastify";
+import "../../css/ReactToastify.css";
+import "../../css/Custom.css";
 
-export default function Guest({ children }: PropsWithChildren) {
+export default function Guest({children}: PropsWithChildren) {
     return (
-        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                </Link>
-            </div>
+        <div>
+            <header>
+                <div>
+                    <Navbar bg="dark" data-bs-theme="dark" className="lh-lg">
+                        <Container>
+                            <Navbar.Brand href="/">ReKrie</Navbar.Brand>
 
-            <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                            <Nav className="me-auto">
+                                <Nav.Link href="/">Home</Nav.Link>
+                                <Nav.Link href="/produto">Produtos</Nav.Link>
+                                <Nav.Link href="/material">Materiais</Nav.Link>
+                            </Nav>
+
+                            <ButtonGroup aria-label="Basic example" className="justify-content-end">
+                                <Button href="/login" variant="light">Login</Button>
+                                <Button href="/register" variant="light">Cadastrar-se</Button>
+                            </ButtonGroup>
+
+                        </Container>
+                    </Navbar>
+                </div>
+            </header>
+
+            <main className="min-h-screen flex flex-col items-center bg-body-secondary">
                 {children}
-            </div>
+            </main>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+                theme="colored"
+            />
         </div>
     );
 }

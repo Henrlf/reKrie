@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Product\ProductCreateRequest;
-use App\Models\Product;
+use App\Http\Requests\Produto\ProdutoCreateRequest;
+use App\Models\Produto;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
-class ProductController extends Controller
+class ProdutoController extends Controller
 {
-    public function create(ProductCreateRequest $request): RedirectResponse
+    public function create(ProdutoCreateRequest $request): RedirectResponse
     {
-        Log::info('ProductCreateRequest: {request}', ['request' => $request->getContent()]);
+        Log::info('ProdutoCreateRequest: {request}', ['request' => $request->getContent()]);
 
         $mappedData = [
             'idMaterial' => 1,
@@ -29,13 +27,9 @@ class ProductController extends Controller
             'valor' => $request->input('value'),
             'situacao' => true
         ];
-     
-        $product = Product::create($mappedData);
-        $product->findAll();
-        return Redirect::route('dashboard');
-    }
 
-    public static function findAll() {
-        return DB::table('produto')->get()->toArray();
+        Produto::create($mappedData);
+
+        return Redirect::route('dashboard');
     }
 }

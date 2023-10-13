@@ -7,7 +7,7 @@ class Material extends BaseModel
     protected $table = 'material';
 
     // ATRIBUTOS PADROES
-    protected $attributes = [];
+//    protected $attributes = [];
 
     // DECLARA AS VARIAVEIS
     protected $fillable = [
@@ -19,12 +19,12 @@ class Material extends BaseModel
     // DECLARA O TIPO DAS VARIAVEIS
     protected $casts = [
         'nome' => 'string',
-        'descricao' => 'text',
+        'descricao' => 'string',
         'situacao' => 'boolean'
     ];
 
     public function produtos()
     {
-        return $this->hasMany(Product::class, 'idMaterial', 'id');
+        return $this->hasMany(Produto::class, 'idMaterial', 'id');
     }
 }

@@ -9,8 +9,31 @@ class BaseModel extends Model
 {
     protected $primaryKey = 'id';
 
-    public function findAll()
+    public static function findAll()
     {
-        return DB::table($this->table)->get();
+        $class = get_called_class();
+
+        if (property_exists($class, 'table'))
+        {
+            $model = new $class;
+
+            return DB::table($model->table)->get();
+        }
+
+        return null;
+    }
+
+    public static function findOneById($id)
+    {
+        $class = get_called_class();
+
+        if (property_exists($class, 'table'))
+        {
+            $model = new $class;
+
+            return DB::table($model->table)->where('id', '=', $id)->first();
+        }
+
+        return null;
     }
 }

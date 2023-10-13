@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Product extends BaseModel
+class Produto extends BaseModel
 {
     protected $table = 'produto';
 

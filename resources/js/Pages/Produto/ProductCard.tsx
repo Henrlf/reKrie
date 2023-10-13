@@ -8,13 +8,8 @@ interface ProductCardProps {
     link: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-                                                     title,
-                                                     price,
-                                                     description,
-                                                     imageUrl,
-                                                     link,
-                                                 }) => {
+const ProductCard: React.FC<ProductCardProps> = ({title, price, description, imageUrl, link}) => {
+
     return (
         <a
             href={link}

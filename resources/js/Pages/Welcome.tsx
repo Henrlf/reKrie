@@ -1,8 +1,8 @@
 import { Link, Head, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import ProductCard from "@/Pages/Product/ProductCard";
+import ProductCard from "@/Pages/Produto/ProductCard";
 
-export default function Welcome({ auth, products }: PageProps<{ products: any }>) {
+export default function Welcome({ auth, produtos }: PageProps<{ produtos: any }>) {
 
     return (
         <>
@@ -53,12 +53,12 @@ export default function Welcome({ auth, products }: PageProps<{ products: any }>
 
                     <div className="mt-16">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                            {products.map((product: any) => 
+                            {produtos.map((produto: any) =>
                                 <ProductCard
-                                    title={product.nome}
-                                    price={"R$ "+product.valor}
-                                    description={product.descricao}
-                                    imageUrl={product.imagem}
+                                    title={produto.nome}
+                                    price={"R$ "+produto.valor}
+                                    description={produto.descricao}
+                                    imageUrl={produto.imagem}
                                     link="https://laravel.com/docs"
                                 />
                             )}
