@@ -34,6 +34,7 @@ export default function Dashboard({auth, produtos}: PageProps<{ produtos: any }>
                                     <Button href="#" variant="primary">Button 1</Button>
                                     <Button href="#" variant="primary">Button 2</Button>
                                 </div>
+                                
                                 <small className="text-body-secondary">{"Preço: R$ " + produto.valor}</small>
                             </div>
                         </Card.Body>
