@@ -71,8 +71,10 @@ export default function Adicionar({auth}: PageProps) {
                         <Form.Group as={Col} md="3" className="justify-end" controlId="situacao">
                             <Form.Label style={{display: "flex", marginLeft: "7px"}}>Situação</Form.Label>
                             <Form.Select
-                                defaultValue={1}
-                                onChange={(e) => setData('situacao', e.target.value)}>
+                                onChange={(e) => setData('situacao', e.target.value)}
+                                required
+                            >
+                                <option value='' disabled selected>Selecione a situação</option>
                                 <option value='1'>Habilitado</option>
                                 <option value='0'>Desabilitado</option>
                             </Form.Select>

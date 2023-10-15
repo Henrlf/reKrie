@@ -30,9 +30,9 @@ export default function Adicionar({auth, material}: PageProps<{ material: any }>
             try {
                 put(route('material.update'));
 
-                toast.success('Material salvo com sucesso.');
+                toast.success('Material atualizado com sucesso.');
             } catch (error) {
-                toast.success('Não foi possível salvar o material. Por favor, tente novamente.');
+                toast.success('Não foi possível atualizar o material. Por favor, tente novamente.');
             }
         }
     };

@@ -85,6 +85,7 @@ export default function RegisterProduct({ auth }: PageProps) {
                                 value={data.description}
                                 className="mt-1 block w-full"
                                 onChange={(e) => setData('description', e.target.value)}
+                                spellCheck={false}
                                 required
                             />
 

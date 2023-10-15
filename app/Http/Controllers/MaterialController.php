@@ -32,6 +32,6 @@ class MaterialController extends Controller
             ->where('id', '=', $id)
             ->update(['nome' => $request->input('nome'), 'descricao' => $request->input('descricao'), 'situacao' => $request->input('situacao')]);
 
-        return Redirect::route("material.editar", ['id' => $id]);
+        return Redirect::route("material.listagem");
     }
 }

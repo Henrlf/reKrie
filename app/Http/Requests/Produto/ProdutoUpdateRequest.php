@@ -4,12 +4,11 @@ namespace App\Http\Requests\Produto;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProdutoCreateRequest extends FormRequest
+class ProdutoUpdateRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'idMaterial' => ['string', 'max:255'],
             'nome' => ['string', 'max:255'],
             'descricao' => ['string', 'max:255'],
             'imagem' => ['string', 'max:255'],
@@ -17,8 +16,7 @@ class ProdutoCreateRequest extends FormRequest
             'altura' => ['string', 'max:255'],
             'comprimento' => ['string', 'max:255'],
             'peso' => ['string', 'max:255'],
-            'valor' => ['string', 'max:255'],
-            'situacao' => ['string', 'max:255']
+            'valor' => ['string', 'max:255']
         ];
     }
 }

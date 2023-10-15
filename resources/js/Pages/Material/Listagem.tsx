@@ -8,7 +8,7 @@ import {faPenToSquare, faCube, faPlus, faAngleLeft, faAngleRight} from '@fortawe
 
 export default function Listagem({auth, materiais}: PageProps<{ materiais: any }>) {
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 15;
+    const recordsPerPage = 10;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const registros = materiais.slice(firstIndex, lastIndex);
@@ -66,9 +66,15 @@ export default function Listagem({auth, materiais}: PageProps<{ materiais: any }
                 <Nav>
                     <ul className="pagination m-auto">
                         <li className="page-item">
-                            <a href="#" className="page-link" onClick={prePage}>
-                                <FontAwesomeIcon className="mx-1" icon={faAngleLeft}/>
-                            </a>
+                            {currentPage === numbers[0] ? (
+                                <a href="#" className="page-link disabled" onClick={prePage}>
+                                    <FontAwesomeIcon className="mx-1" icon={faAngleLeft}/>
+                                </a>
+                            ) : (
+                                <a href="#" className="page-link" onClick={prePage}>
+                                    <FontAwesomeIcon className="mx-1" icon={faAngleLeft}/>
+                                </a>
+                            )}
                         </li>
                         {
                             numbers.map((id, i) => (
@@ -80,9 +86,15 @@ export default function Listagem({auth, materiais}: PageProps<{ materiais: any }
                             ))
                         }
                         <li className="page-item">
-                            <a href="#" className="page-link" onClick={nextPage}>
-                                <FontAwesomeIcon className="mx-1" icon={faAngleRight}/>
-                            </a>
+                            {currentPage === numbers[numbers.length - 1] ? (
+                                <a href="#" className="page-link disabled" onClick={nextPage}>
+                                    <FontAwesomeIcon className="mx-1" icon={faAngleRight}/>
+                                </a>
+                            ) : (
+                                <a href="#" className="page-link" onClick={nextPage}>
+                                    <FontAwesomeIcon className="mx-1" icon={faAngleRight}/>
+                                </a>
+                            )}
                         </li>
                     </ul>
                 </Nav>

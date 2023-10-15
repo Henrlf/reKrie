@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Produto\ProdutoCreateRequest;
+use App\Http\Requests\Produto\ProdutoUpdateRequest;
 use App\Models\Produto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
@@ -15,21 +16,44 @@ class ProdutoController extends Controller
         Log::info('ProdutoCreateRequest: {request}', ['request' => $request->getContent()]);
 
         $mappedData = [
-            'idMaterial' => 1,
-            'nome' => $request->input('name'),
-            'descricao' => $request->input('description'),
-            'imagem' => 'https://w7.pngwing.com/pngs/592/699/png-transparent-coffee-tables-rustic-furniture-log-furniture-table-furniture-drawer-coffee-tables.png',
-            'largura' => 40.0,
-            'altura' => 120.00,
-            'comprimento' => 45.0,
-            'peso' => 3.5,
-            'saldoEstoque' => $request->input('stock_quantity'),
-            'valor' => $request->input('value'),
-            'situacao' => true
+            'idMaterial' => $request->input('idMaterial'),
+            'nome' => $request->input('nome'),
+            'descricao' => $request->input('descricao'),
+            'imagem' => $request->input('imagem'),
+            'largura' => $request->input('largura'),
+            'altura' => $request->input('altura'),
+            'comprimento' => $request->input('comprimento'),
+            'peso' => $request->input('peso'),
+            'saldoEstoque' => 0,
+            'valor' => $request->input('valor'),
+            'situacao' => $request->input('situacao')
         ];
 
         Produto::create($mappedData);
 
-        return Redirect::route('dashboard');
+        return Redirect::route('produto.listagem');
+    }
+
+    public function update(ProdutoUpdateRequest $request): RedirectResponse
+    {
+        Log::info('ProdutoUpdateRequest: {request}', ['request' => $request->getContent()]);
+
+        Produto::query()
+            ->where('id', '=', $request->input('id'))
+            ->update([
+                    'idMaterial' => $request->input('idMaterial'),
+                    'nome' => $request->input('nome'),
+                    'descricao' => $request->input('descricao'),
+                    'imagem' => $request->input('imagem'),
+                    'largura' => $request->input('largura'),
+                    'altura' => $request->input('altura'),
+                    'comprimento' => $request->input('comprimento'),
+                    'peso' => $request->input('peso'),
+                    'saldoEstoque' => 0,
+                    'valor' => $request->input('valor'),
+                    'situacao' => $request->input('situacao')
+                ]);
+
+        return Redirect::route("produto.listagem");
     }
 }
