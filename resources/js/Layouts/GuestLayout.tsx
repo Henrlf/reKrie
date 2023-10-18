@@ -32,7 +32,6 @@ export default function Guest({children}: PropsWithChildren) {
                                 <Button href="/register" variant="light">Cadastrar-se</Button>
                             </ButtonGroup>
                             </div>
-
                         </Container>
                     </Navbar>
                 </div>
