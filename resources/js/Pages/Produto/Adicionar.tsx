@@ -7,6 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShoppingBasket, faSave} from '@fortawesome/free-solid-svg-icons'
 import BtnVoltar from "@/Components/Buttons/BtnVoltar";
 import {toast} from "react-toastify";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+
 
 export default function Adicionar({auth, materiais}: PageProps<{ materiais: any }>) {
     const {data, setData, post, processing, errors, reset} = useForm({
@@ -71,8 +73,11 @@ export default function Adicionar({auth, materiais}: PageProps<{ materiais: any 
     }, []);
 
     return (
-        <GuestLayout>
-            <Head title="Materiais"/>
+        <AuthenticatedLayout
+            user={auth.user}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Produtos</h2>}
+        >
+            <Head title="Produtos"/>
             <Container className="w-75 mt-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
                     <div className="w-50 d-flex flex-row ">
@@ -220,6 +225,6 @@ export default function Adicionar({auth, materiais}: PageProps<{ materiais: any 
                     </Row>
                 </Form>
             </Container>
-        </GuestLayout>
+        </AuthenticatedLayout>
     );
 }

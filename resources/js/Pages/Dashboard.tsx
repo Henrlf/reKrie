@@ -1,6 +1,6 @@
 import {PageProps} from '@/types';
 import React from "react";
-import GuestLayout from '@/Layouts/GuestLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link} from "@inertiajs/react";
 import {Button, Card, Container, Placeholder} from "react-bootstrap";
 import ProductCard from "@/Pages/Produto/ProductCard";
@@ -8,8 +8,10 @@ import ProductCard from "@/Pages/Produto/ProductCard";
 export default function Dashboard({auth, produtos}: PageProps<{ produtos: any }>) {
 
     return (
-        <GuestLayout>
-            <Head title="Dashboard"/>
+        <AuthenticatedLayout
+            user={auth.user}
+        >
+            <Head title="Dashboard" />
 
             <Container className="text-center">
                 <div className="row py-lg-5">
@@ -89,6 +91,6 @@ export default function Dashboard({auth, produtos}: PageProps<{ produtos: any }>
             {/*    </div>*/}
             {/*</div>*/}
 
-        </GuestLayout>
+        </AuthenticatedLayout>
     );
 }

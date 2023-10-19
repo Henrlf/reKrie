@@ -27,7 +27,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                    Atualize as informações de perfil e endereço de e-mail da sua conta.
                 </p>
             </header>
 
@@ -67,7 +67,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
-                            Your email address is unverified.
+                            Seu endereço de e-mail não foi verificado.
                             <Link
                                 href={route('verification.send')}
                                 method="post"

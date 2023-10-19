@@ -7,6 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCube, faSave} from '@fortawesome/free-solid-svg-icons'
 import BtnVoltar from "@/Components/Buttons/BtnVoltar";
 import {Id, toast} from "react-toastify";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+
 
 export default function Adicionar({auth, material}: PageProps<{ material: any }>) {
     const {data, setData, put, processing, errors, reset} = useForm({
@@ -44,7 +46,10 @@ export default function Adicionar({auth, material}: PageProps<{ material: any }>
     }, []);
 
     return (
-        <GuestLayout>
+        <AuthenticatedLayout
+            user={auth.user}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Materiais</h2>}
+        >
             <Head title="Materiais"/>
             <Container className="w-75 mt-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
@@ -113,6 +118,6 @@ export default function Adicionar({auth, material}: PageProps<{ material: any }>
                     </Row>
                 </Form>
             </Container>
-        </GuestLayout>
+        </AuthenticatedLayout>
     );
 }
