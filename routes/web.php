@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProfileController;
+use App\Models\Endereco;
 use App\Models\Material;
 use App\Models\Produto;
 use Illuminate\Support\Facades\Route;
@@ -13,9 +15,9 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/usuario/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/usuario/perfil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/usuario/perfil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 //Material ------------------------------------------------------------------------------------------------------------------------------
@@ -62,5 +64,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/produtos', [ProdutoController::class, 'delete'])->name('produtos.delete');
     Route::put('/produtos', [ProdutoController::class, 'update'])->name('produtos.update');
 });
+
+//Endereço ------------------------------------------------------------------------------------------------------------------------------
+
+Route::get('/usuario/endereco', function () {
+    return Inertia::render('Endereco/Listagem', ['enderecos' => Endereco::findAllFromUser()]);
+})->middleware(['auth', 'verified'])->name('endereco.listagem');
+
+Route::get('/usuario/endereco/adicionar', function () {
+    return Inertia::render('Endereco/Adicionar');
+})->middleware(['auth', 'verified'])->name('endereco.adicionar');
+
+Route::get('/usuario/endereco/editar/{id}', function () {
+    $id = request()->route()->parameter('id');
+    return Inertia::render('Endereco/Editar', ['endereco' => Endereco::findOneById($id)]);
+})->middleware(['auth', 'verified'])->name('endereco.editar');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/enderecos', [EnderecoController::class, 'create'])->name('endereco.create');
+    Route::delete('/enderecos', [EnderecoController::class, 'delete'])->name('endereco.delete');
+    Route::put('/enderecos', [EnderecoController::class, 'update'])->name('endereco.update');
+});
+
+//---------------------------------------------------------------------------------------------------------------------------------------
 
 require __DIR__ . '/auth.php';

@@ -46,14 +46,14 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
     return (
         <section className={`space-y-6 ${className}`}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Delete Account</h2>
+                <h2 className="text-lg font-medium text-gray-900">Excluir Conta</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Depois que sua conta for excluída, todos os seus recursos e dados serão excluídos permanentemente. Antes de excluir sua conta, baixe quaisquer dados ou informações que você deseja reter. 
+                    Depois que sua conta for excluída, todos os seus recursos e dados serão excluídos permanentemente. Antes de excluir sua conta, baixe quaisquer dados ou informações que você deseja reter.
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
+            <DangerButton onClick={confirmUserDeletion}>Excluir conta</DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
@@ -62,7 +62,7 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-600">
-                        Depois que sua conta for excluída, todos os seus recursos e dados serão excluídos permanentemente. Antes de excluir sua conta, baixe quaisquer dados ou informações que você deseja reter. 
+                        Depois que sua conta for excluída, todos os seus recursos e dados serão excluídos permanentemente. Antes de excluir sua conta, baixe quaisquer dados ou informações que você deseja reter.
                     </p>
 
                     <div className="mt-6">
@@ -77,7 +77,7 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
                             onChange={(e) => setData('password', e.target.value)}
                             className="mt-1 block w-3/4"
                             isFocused
-                            placeholder="Password"
+                            placeholder="Senha"
                         />
 
                         <InputError message={errors.password} className="mt-2" />
@@ -87,7 +87,7 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
                         <SecondaryButton onClick={closeModal}>Cancelar</SecondaryButton>
 
                         <DangerButton className="ml-3" disabled={processing}>
-                            Deletar Conta
+                            Excluir Conta
                         </DangerButton>
                     </div>
                 </form>

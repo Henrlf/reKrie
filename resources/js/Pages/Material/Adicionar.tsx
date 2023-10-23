@@ -12,7 +12,7 @@ export default function Adicionar({auth}: PageProps) {
     const {data, setData, post, processing, errors, reset} = useForm({
         nome: '',
         descricao: '',
-        situacao: ''
+        situacao: '1'
     });
 
     const [validated, setValidated] = useState(false);

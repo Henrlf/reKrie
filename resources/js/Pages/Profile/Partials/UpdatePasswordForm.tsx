@@ -39,7 +39,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
+                <h2 className="text-lg font-medium text-gray-900">Atualizar Senha</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
                     Certifique-se de que sua conta esteja usando uma senha longa e aleatória para permanecer segura.
@@ -80,7 +80,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password_confirmation" value="CConfirmar Nova Senha" />
+                    <InputLabel htmlFor="password_confirmation" value="Confirmar Nova Senha" />
 
                     <TextInput
                         id="password_confirmation"
