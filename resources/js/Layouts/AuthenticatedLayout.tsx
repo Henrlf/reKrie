@@ -1,9 +1,6 @@
 import { useState, PropsWithChildren, ReactNode } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import ApplicationLogo from '@/Components/Logos/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
 import { User } from '@/types';
 import { Button, ButtonGroup, Nav, Navbar, Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";

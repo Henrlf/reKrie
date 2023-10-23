@@ -7,8 +7,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShoppingBasket, faSave} from '@fortawesome/free-solid-svg-icons'
 import BtnVoltar from "@/Components/Buttons/BtnVoltar";
 import {toast} from "react-toastify";
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-
 
 export default function Adicionar({auth, produto, materiais}: PageProps<{ produto: any, materiais: any }>) {
     const {data, setData, put, processing, errors, reset} = useForm({
@@ -36,7 +34,6 @@ export default function Adicionar({auth, produto, materiais}: PageProps<{ produt
             toast.error("Preencha os campos obrigatórios!")
         } else {
             try {
-                console.log(data);
                 put(route("produtos.update"));
 
                 toast.success('Produto atualizado com sucesso.');
@@ -77,10 +74,7 @@ export default function Adicionar({auth, produto, materiais}: PageProps<{ produt
     }, []);
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Produtos</h2>}
-        >
+        <GuestLayout user={auth.user}>
             <Head title="Produtos"/>
             <Container className="w-75 mt-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
@@ -126,7 +120,6 @@ export default function Adicionar({auth, produto, materiais}: PageProps<{ produt
                                 defaultValue={produto.situacao}
                                 required
                             >
-                                <option value='' disabled>Selecione a situação</option>
                                 <option value='1'>Habilitado</option>
                                 <option value='0'>Desabilitado</option>
                             </Form.Select>
@@ -238,6 +231,6 @@ export default function Adicionar({auth, produto, materiais}: PageProps<{ produt
                     </Row>
                 </Form>
             </Container>
-        </AuthenticatedLayout>
+        </GuestLayout>
     );
 }

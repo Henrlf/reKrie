@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use \App\Http\Requests\Material\Material;
+use App\Http\Requests\Material\Material;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;

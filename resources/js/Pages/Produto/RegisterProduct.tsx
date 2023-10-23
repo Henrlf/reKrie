@@ -1,5 +1,5 @@
 import { useEffect, FormEventHandler } from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -50,9 +50,7 @@ export default function RegisterProduct({ auth }: PageProps) {
     };
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Registrar produto</h2>}>
+        <GuestLayout user={auth.user}>
 
             <Head title="Registrar produto" />
 
@@ -134,6 +132,6 @@ export default function RegisterProduct({ auth }: PageProps) {
                     </form>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </GuestLayout>
     );
 }

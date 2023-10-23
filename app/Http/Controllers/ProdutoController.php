@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Produto\ProdutoCreateRequest;
 use App\Http\Requests\Produto\ProdutoUpdateRequest;
-use App\Models\Produto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -29,7 +28,7 @@ class ProdutoController extends Controller
             'situacao' => $request->input('situacao')
         ];
 
-        Produto::create($mappedData);
+        \App\Models\Produto::create($mappedData);
 
         return Redirect::route('produto.listagem');
     }
@@ -38,7 +37,7 @@ class ProdutoController extends Controller
     {
         Log::info('ProdutoUpdateRequest: {request}', ['request' => $request->getContent()]);
 
-        Produto::query()
+        \App\Models\Produto::query()
             ->where('id', '=', $request->input('id'))
             ->update([
                     'idMaterial' => $request->input('idMaterial'),

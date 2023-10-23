@@ -24,7 +24,7 @@ export default function ConfirmPassword() {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout user={undefined}>
             <Head title="Confirm Password" />
 
             <div className="mb-4 text-sm text-gray-600">

@@ -5,8 +5,6 @@ import {Button, Container, Nav, Table} from "react-bootstrap";
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPenToSquare, faShoppingBasket, faPlus, faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-
 
 export default function Listagem({auth, produtos}: PageProps<{ produtos: any }>) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,10 +16,7 @@ export default function Listagem({auth, produtos}: PageProps<{ produtos: any }>)
     const numbers = [...Array(npage + 1).keys()].slice(1);
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Produtos</h2>}
-        >
+        <GuestLayout user={auth.user}>
             <Head title="Produtos"/>
             <Container className="w-75 mt-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
@@ -105,7 +100,7 @@ export default function Listagem({auth, produtos}: PageProps<{ produtos: any }>)
                 </Nav>
 
             </Container>
-        </AuthenticatedLayout>
+        </GuestLayout>
     );
 
     function prePage() {

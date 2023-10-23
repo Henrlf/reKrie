@@ -36,7 +36,6 @@ export default function Welcome({ auth, produtos }: PageProps<{ produtos: any }>
                 </div>
 
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
-                    {/*App logo*/}
                     <div className="flex justify-center">
                         <svg
                             viewBox="0 0 62 65"
