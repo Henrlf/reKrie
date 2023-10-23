@@ -21,7 +21,7 @@ export default function Guest({user, children}: PropsWithChildren<{ user: any }>
     }
 
     return (
-        <div className="max-h-screen">
+        <div>
             <header>
                 <Navbar bg="gray-800" data-bs-theme="dark" className="lh-lg">
                     <Container className="flex-nowrap" style={{"minWidth": "75%"}}>
@@ -32,7 +32,7 @@ export default function Guest({user, children}: PropsWithChildren<{ user: any }>
                 </Navbar>
             </header>
 
-            <main className="flex flex-col items-center bg-body-secondary">
+            <main className="min-h-screen flex flex-col items-center bg-body-secondary">
                 {children}
             </main>
 
