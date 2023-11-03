@@ -2,16 +2,18 @@
 
 use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\CarrinhoCompraController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Endereco;
 use App\Models\Material;
 use App\Models\Produto;
+use App\Models\CarrinhoCompra;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard', ['produtos' => Produto::findAll()]);
+    return Inertia::render('Dashboard', ['produtos' => Produto::findAllActive()]);
 })->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -84,6 +86,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/enderecos', [EnderecoController::class, 'create'])->name('endereco.create');
     Route::delete('/enderecos', [EnderecoController::class, 'delete'])->name('endereco.delete');
     Route::put('/enderecos', [EnderecoController::class, 'update'])->name('endereco.update');
+});
+
+//Carrinho de Compras ------------------------------------------------------------------------------------------------------------------------------
+
+Route::get('/usuario/carrinhocompra', function () {
+    return Inertia::render('CarrinhoCompra/Listagem', ['produtosCarrinho' => CarrinhoCompra::getProdutosCarrinho()]);
+})->middleware(['auth', 'verified'])->name('carrinho.listagem');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/carrinhoCompra/{idProduto}', [CarrinhoCompraController::class, 'create'])->name('carrinhocompra.create');
+    Route::delete('/carrinhoCompra/{idCarrinho}', [CarrinhoCompraController::class, 'delete'])->name('carrinhocompra.delete');
 });
 
 //---------------------------------------------------------------------------------------------------------------------------------------

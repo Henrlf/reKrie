@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class BaseModel extends Model
 {
@@ -11,16 +10,24 @@ class BaseModel extends Model
 
     public static function findAll()
     {
-        $class = get_called_class();
+        $class = "\\" . get_called_class();
 
-        if (property_exists($class, 'table'))
+        return $class::query()->get();
+    }
+
+    public static function findAllActive()
+    {
+        $class = "\\" . get_called_class();
+        $model = new $class;
+
+        $query = $class::query();
+
+        if (in_array('situacao', $model->fillable))
         {
-            $model = new $class;
-
-            return DB::table($model->table)->orderBy('updated_at', 'DESC')->get();
+            $query->where('situacao', '=', true);
         }
 
-        return null;
+        return $query->get();
     }
 
     public static function findOneById($id)
@@ -31,7 +38,9 @@ class BaseModel extends Model
         {
             $model = new $class;
 
-            return DB::table($model->table)->where('id', '=', $id)->first();
+            return $model::query()
+                ->where('id', '=', $id)
+                ->first();
         }
 
         return null;

@@ -1,12 +1,12 @@
+import "../../css/ReactToastify.css";
+import "../../css/Custom.css";
 import React, {FormEventHandler, PropsWithChildren} from 'react';
 import {Button, ButtonGroup, Nav, Navbar, Container, NavDropdown, Form} from "react-bootstrap";
 import {toast, ToastContainer} from "react-toastify";
-import "../../css/ReactToastify.css";
-import "../../css/Custom.css";
 import ApplicationIcon from '@/Components/Logos/ApplicationIcon';
-import {faCube, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import {User} from "@/types";
-import {Link, useForm} from "@inertiajs/react";
+import {useForm} from "@inertiajs/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function Guest({user, children}: PropsWithChildren<{ user: any }>) {
@@ -26,7 +26,6 @@ export default function Guest({user, children}: PropsWithChildren<{ user: any }>
                 <Navbar bg="gray-800" data-bs-theme="dark" className="lh-lg">
                     <Container className="flex-nowrap" style={{"minWidth": "75%"}}>
                         <Navbar.Brand href="/" className="d-flex"><ApplicationIcon/>ReKrie</Navbar.Brand>
-
                         {layout}
                     </Container>
                 </Navbar>
@@ -53,7 +52,7 @@ export default function Guest({user, children}: PropsWithChildren<{ user: any }>
 }
 
 function unloggedLayout() {
-    const {data, setData, post, processing, errors, reset} = useForm({
+    const {data, setData, post} = useForm({
         searchDescription: '',
     });
 
@@ -92,7 +91,7 @@ function unloggedLayout() {
 }
 
 function loggedUserLayout(user: User) {
-    const {data, setData, post, processing, errors, reset} = useForm({
+    const {data, setData, post} = useForm({
         searchDescription: '',
     });
 
@@ -117,23 +116,23 @@ function loggedUserLayout(user: User) {
                     onChange={(e) => setData('searchDescription', e.target.value)}
                 />
 
-                <Button variant="outline-info d-flex align-items-center">
+                <Button variant="outline-info d-flex align-items-center" title="Pesquisar">
                     <FontAwesomeIcon icon={faSearch}/>
                 </Button>
             </Form>
 
-            <Nav className="justify-content-end">
+            <Nav className="d-flex justify-content-end align-items-center">
+                <Button href={"/usuario/carrinhocompra"} variant="outline-light" className="nav-btn-size" title="Carrinho de compras">
+                    <FontAwesomeIcon icon={faCartShopping}/>
+                </Button>
+
                 <NavDropdown title={user.name} menuVariant="dark">
                     <NavDropdown.Item href="/usuario/perfil">Perfil</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/endereco">Endereços</NavDropdown.Item>
-                    <NavDropdown.Item href="/usuario/pedido">Pedidos</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/orcamento">Orçamentos</NavDropdown.Item>
+                    <NavDropdown.Item href="/usuario/pedido">Meus pedidos</NavDropdown.Item>
                     <NavDropdown.Divider/>
-                    <NavDropdown.Item>
-                        <Link href={"/logout"} method="post" as="button">
-                            Sair
-                        </Link>
-                    </NavDropdown.Item>
+                    <NavDropdown.Item>Sair</NavDropdown.Item>
 
                 </NavDropdown>
             </Nav>
@@ -142,6 +141,18 @@ function loggedUserLayout(user: User) {
 }
 
 function loggedAdminLayout(user: User) {
+    const {post} = useForm({});
+
+    const enventSelected = (eventKey: any) => {
+        if (eventKey == 0) {
+            try {
+                post(route('logout'));
+            } catch (error) {
+                toast.success('Não foi possível realizar a busca. Por favor, tente novamente.');
+            }
+        }
+    };
+
     return (
         <>
             <Nav className="me-auto">
@@ -149,18 +160,13 @@ function loggedAdminLayout(user: User) {
                 <Nav.Link href="/material">Materiais</Nav.Link>
             </Nav>
 
-            <Nav className="justify-content-end">
+            <Nav className="justify-content-end" activeKey="1" onSelect={enventSelected}>
                 <NavDropdown title={user.name} menuVariant="dark">
                     <NavDropdown.Item href="/">Action</NavDropdown.Item>
                     <NavDropdown.Item href="/">Another action</NavDropdown.Item>
                     <NavDropdown.Item href="/">Something</NavDropdown.Item>
                     <NavDropdown.Divider/>
-                    <NavDropdown.Item>
-                        <Link href={"/logout"} method="post" as="button">
-                            Sair
-                        </Link>
-                    </NavDropdown.Item>
-
+                    <NavDropdown.Item eventKey={0}>Sair</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
         </>

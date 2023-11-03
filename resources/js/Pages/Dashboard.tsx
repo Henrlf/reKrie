@@ -2,9 +2,25 @@ import {PageProps} from '@/types';
 import React from "react";
 import GuestLayout from '@/Layouts/GuestLayout';
 import {Head} from "@inertiajs/react";
-import {Button, ButtonGroup, Card, Container, Row} from "react-bootstrap";
+import {Button, ButtonGroup, Card, Container, Dropdown} from "react-bootstrap";
+import {toast} from "react-toastify";
+import Separator from "@/Components/Separator";
+import axios from "axios";
 
 export default function Dashboard({auth, produtos}: PageProps<{ produtos: any }>) {
+
+    const addProdutoCarrinho = (idProduto: any) => {
+        axios.post(route('carrinhocompra.create', {idProduto: idProduto}))
+            .then(response => {
+                toast.success('Produto adicionado ao carrinho de compras.');
+            })
+            .catch(error => {
+                toast.error('Não foi possível adicionar o produto ao carrinho. Por favor, tente novamente.');
+            });
+    };
+
+    console.log(produtos);
+
     return (
         <GuestLayout user={auth.user}>
             <Head title="Dashboard"/>
@@ -21,26 +37,30 @@ export default function Dashboard({auth, produtos}: PageProps<{ produtos: any }>
 
                 <div className="d-flex justify-content-around p-3 flex-wrap">
                     {produtos.map((produto: any) =>
-                        <Card className="border-2 productCard">
-                            <Card.Img variant="top" src={produto.imagem}/>
+                        <div key={"product_card_" + produto.id} className="div-product">
 
-                            <Card.Body className="p-2 mb-3">
-                                <Card.Text className="text-body-secondary h6 mt-1 float-end">
-                                    {"R$ " + produto.valor.replace('.', ',')}
-                                </Card.Text>
+                            <Card key={"card_" + produto.id} className="div-product-card">
+                                <Card.Img variant="top" src={produto.imagem}/>
 
-                                <Card.Title className="d-flex align-items-center h1">
-                                    {produto.nome}
-                                </Card.Title>
+                                <Card.Body className="p-2">
+                                    <Card.Text className="text-body-secondary h6 mt-1 float-end">{"R$ " + String(produto.valor.toFixed(2)).replace('.', ',')}</Card.Text>
+                                    <Card.Title className="d-flex align-items-center h1">{produto.nome}</Card.Title>
+                                    <Separator/>
+                                    <Card.Text style={{textAlign: "justify"}}>{produto.descricao}</Card.Text>
+                                    <Dropdown.Divider/>
+                                </Card.Body>
+                            </Card>
 
-                                <Card.Text style={{textAlign: "justify"}}>{produto.descricao}</Card.Text>
+                            <ButtonGroup className="div-product-button-group mx-auto" style={{width: 'calc(100% - 2px)'}}>
+                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button">
+                                    Adicionar ao carrinho
+                                </Button>
 
-                                <Card.Subtitle className="d-flex flex-nowrap p-0">
-                                    <Button href="#" variant="primary" className="text-nowrap mr-2 w-50">Adicionar ao carrinho</Button>
-                                    <Button href="#" variant="primary" className="text-nowrap w-50">Comprar</Button>
-                                </Card.Subtitle>
-                            </Card.Body>
-                        </Card>
+                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button">
+                                    Comprar
+                                </Button>
+                            </ButtonGroup>
+                        </div>
                     )}
                 </div>
             </div>

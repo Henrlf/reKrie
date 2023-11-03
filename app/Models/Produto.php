@@ -23,21 +23,26 @@ class Produto extends BaseModel
 
     // DECLARA O TIPO DAS VARIAVEIS
     protected $casts = [
-        'idMaterial' => 'int',
+        'idMaterial' => 'integer',
         'nome' => 'string',
         'descricao' => 'string',
         'imagem' => 'string',
-        'largura' => 'decimal',
-        'altura' => 'decimal',
-        'comprimento' => 'decimal',
-        'peso' => 'decimal',
-        'saldoEstoque' => 'int',
-        'valor' => 'decimal',
+        'largura' => 'double',
+        'altura' => 'double',
+        'comprimento' => 'double',
+        'peso' => 'double',
+        'saldoEstoque' => 'integer',
+        'valor' => 'float',
         'situacao' => 'boolean'
     ];
 
     public function material()
     {
         return $this->belongsTo(Material::class, 'id', 'idMaterial');
+    }
+
+    public function carrinhoCompras()
+    {
+        return $this->hasMany(CarrinhoCompra::class, 'idProduto', 'id');
     }
 }

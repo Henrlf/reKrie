@@ -24,9 +24,9 @@ class Endereco extends BaseModel
 
     // DECLARA O TIPO DAS VARIAVEIS
     protected $casts = [
-        'idUsuario' => 'int',
+        'idUsuario' => 'integer',
         'endereco' => 'string',
-        'numero' => 'int',
+        'numero' => 'integer',
         'complemento' => 'string',
         'uf' => 'string',
         'cidade' => 'string',
