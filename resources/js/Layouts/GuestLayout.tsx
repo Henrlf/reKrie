@@ -77,7 +77,7 @@ function unloggedLayout() {
                     onChange={(e) => setData('searchDescription', e.target.value)}
                 />
 
-                <Button variant="outline-info d-flex align-items-center">
+                <Button variant="outline-info d-flex align-items-center" onClick={submitSearch}>
                     <FontAwesomeIcon icon={faSearch}/>
                 </Button>
             </Form>
@@ -116,7 +116,7 @@ function loggedUserLayout(user: User) {
                     onChange={(e) => setData('searchDescription', e.target.value)}
                 />
 
-                <Button variant="outline-info d-flex align-items-center" title="Pesquisar">
+                <Button variant="outline-info d-flex align-items-center" title="Pesquisar" onClick={submitSearch}>
                     <FontAwesomeIcon icon={faSearch}/>
                 </Button>
             </Form>

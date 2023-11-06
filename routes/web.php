@@ -12,9 +12,18 @@ use App\Models\CarrinhoCompra;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+//Dashboard ------------------------------------------------------------------------------------------------------------
+
 Route::get('/', function () {
     return Inertia::render('Dashboard', ['produtos' => Produto::findAllActive()]);
 })->name('dashboard');
+
+Route::post('/', function () {
+    $name = request()->get('searchDescription');
+    return Inertia::render('Dashboard', ['produtos' => ProdutoController::findAllByName($name)]);
+})->name('dashboard.search');
+
+//Usuario --------------------------------------------------------------------------------------------------------------
 
 Route::middleware('auth')->group(function () {
     Route::get('/usuario/perfil', [ProfileController::class, 'edit'])->name('profile.edit');

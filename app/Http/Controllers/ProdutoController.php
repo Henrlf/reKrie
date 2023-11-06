@@ -55,4 +55,12 @@ class ProdutoController extends Controller
 
         return Redirect::route("produto.listagem");
     }
+
+    public static function findAllByName($name): \Illuminate\Database\Eloquent\Collection|array
+    {
+        return \App\Models\Produto::query()
+            ->where('situacao', '=', true)
+            ->where('nome', 'LIKE', "%{$name}%")
+            ->get();
+    }
 }
