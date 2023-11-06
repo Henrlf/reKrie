@@ -144,12 +144,13 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                         {/*    </Link>*/}
                         {/*</div>*/}
                     </div>
-                    <div className="flex items-center mt-2">
+                </form>
+                <div className="flex items-center mt-3">
                         <div className="border-t border-gray-300 flex-grow"></div>
-                        <div className="mx-2 text-gray-500">ou</div>
+                        <div className="mx-2 text-gray-500"> ou faça login com </div>
                         <div className="border-t border-gray-300 flex-grow"></div>
                     </div>
-                    <div className="flex flex-col items-center justify-center mt-2">
+                    <div className="flex flex-col items-center justify-center mt-3">
                         <div className="flex justify-center space-x-4" title="Login com Github">
                             <button className="bg-white rounded-full" title="Login com Facebook">
                                 <img width="50" height="50" src="https://img.icons8.com/fluency/48/facebook-circled.png" alt="facebook-circled" />
@@ -162,7 +163,6 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                             </button>
                         </div>
                     </div>
-                </form>
             </div>
         </GuestLayout>
     );

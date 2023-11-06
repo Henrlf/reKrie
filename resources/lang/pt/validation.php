@@ -8,4 +8,6 @@ return [
     ],
     'confirmed' => 'A confirmação da senha não corresponde.',
     // Outras mensagens de erro de validação aqui
+    'required' => 'Preencha a campo de :attribute acima.',
+
 ];
