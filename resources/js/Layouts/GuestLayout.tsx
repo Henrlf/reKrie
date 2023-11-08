@@ -125,15 +125,13 @@ function loggedUserLayout(user: User) {
                 <Button href={"/usuario/carrinhocompra"} variant="outline-light" className="nav-btn-size" title="Carrinho de compras">
                     <FontAwesomeIcon icon={faCartShopping}/>
                 </Button>
-
                 <NavDropdown title={user.name} menuVariant="dark">
                     <NavDropdown.Item href="/usuario/perfil">Perfil</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/endereco">Endereços</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/orcamento">Orçamentos</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/pedido">Meus pedidos</NavDropdown.Item>
                     <NavDropdown.Divider/>
-                    <NavDropdown.Item>Sair</NavDropdown.Item>
-
+                    <NavDropdown.Item eventKey={0}>Sair</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
         </>

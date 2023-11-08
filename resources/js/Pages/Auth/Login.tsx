@@ -22,6 +22,22 @@ export default function Login({ status, canResetPassword }: { status?: string, c
         setIsPasswordVisible(!isPasswordVisible);
     };
 
+    const redirectToGitHub = () => {
+        // Redirecionar o usuário para a página de autenticação do GitHub
+        window.location.href = '/login/github'; // Substitua com a URL real da rota 'login.github'
+    };
+
+    const redirectToGoogle = () => {
+        // Redirecionar o usuário para a página de autenticação do GitHub
+        window.location.href = '/login/google'; // Substitua com a URL real da rota 'login.github'
+    };
+
+    const redirectToFacebook = () => {
+        // Redirecionar o usuário para a página de autenticação do GitHub
+        window.location.href = '/login/facebook'; // Substitua com a URL real da rota 'login.github'
+    };
+
+
     useEffect(() => {
         return () => {
             reset('password');
@@ -44,7 +60,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                 </div>
                 <div className="flex items-center justify-center">
                     <Link
-                        href={route('login')}
+                        href={route('register')}
                         className="underline text-sm text-blue-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Cadastrar-se?
@@ -54,7 +70,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
 
                 <form onSubmit={submit}>
                     <div>
-                        <InputLabel htmlFor="email" value="E-mail" className="ml-2"/>
+                        <InputLabel htmlFor="email" value="E-mail" className="ml-2" />
 
                         <TextInput
                             id="email"
@@ -70,7 +86,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                     </div>
 
                     <div className="mt-3">
-                        <InputLabel htmlFor="password" value="Senha" className="ml-2"/>
+                        <InputLabel htmlFor="password" value="Senha" className="ml-2" />
 
                         <div className="relative">
                             <TextInput
@@ -146,23 +162,23 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                     </div>
                 </form>
                 <div className="flex items-center mt-3">
-                        <div className="border-t border-gray-300 flex-grow"></div>
-                        <div className="mx-2 text-gray-500"> ou faça login com </div>
-                        <div className="border-t border-gray-300 flex-grow"></div>
+                    <div className="border-t border-gray-300 flex-grow"></div>
+                    <div className="mx-2 text-gray-500"> ou faça login com </div>
+                    <div className="border-t border-gray-300 flex-grow"></div>
+                </div>
+                <div className="flex flex-col items-center justify-center mt-3">
+                    <div className="flex justify-center space-x-4" title="Login com Github">
+                        <button onClick={redirectToFacebook} className="bg-white rounded-full" title="Login com Facebook">
+                            <img width="50" height="50" src="https://img.icons8.com/fluency/48/facebook-circled.png" alt="facebook-circled" />
+                        </button>
+                        <button onClick={redirectToGitHub} className="bg-white rounded-full" title="Login com Github">
+                            <img width="50" height="50" src="https://img.icons8.com/glyph-neue/64/github.png" alt="github" />
+                        </button>
+                        <button onClick={redirectToGoogle} className="bg-white rounded-full" title="Login com Google">
+                            <img width="48" height="48" src="https://img.icons8.com/fluency/48/google-logo.png" alt="google-logo" />
+                        </button>
                     </div>
-                    <div className="flex flex-col items-center justify-center mt-3">
-                        <div className="flex justify-center space-x-4" title="Login com Github">
-                            <button className="bg-white rounded-full" title="Login com Facebook">
-                                <img width="50" height="50" src="https://img.icons8.com/fluency/48/facebook-circled.png" alt="facebook-circled" />
-                            </button>
-                            <button className="bg-white rounded-full">
-                                <img width="50" height="50" src="https://img.icons8.com/glyph-neue/64/github.png" alt="github" />
-                            </button>
-                            <button className="bg-white rounded-full" title="Login com Google">
-                                <img width="48" height="48" src="https://img.icons8.com/fluency/48/google-logo.png" alt="google-logo" />
-                            </button>
-                        </div>
-                    </div>
+                </div>
             </div>
         </GuestLayout>
     );

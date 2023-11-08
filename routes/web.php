@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\CarrinhoCompraController;
@@ -109,5 +110,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 //---------------------------------------------------------------------------------------------------------------------------------------
+Route::get('login/github', [AuthenticatedSessionController::class, 'redirectToGitHub'])->name('login.github');
+Route::get('login/github/callback', [AuthenticatedSessionController::class, 'handleGitHubCallback']);
+
+Route::get('login/google', [AuthenticatedSessionController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [AuthenticatedSessionController::class, 'handleGoogleCallback']);
+
+Route::get('login/facebook', [AuthenticatedSessionController::class, 'redirectToFacebook'])->name('login.facebook');
+Route::get('login/facebook/callback', [AuthenticatedSessionController::class, 'handleFacebookCallback']);
 
 require __DIR__ . '/auth.php';

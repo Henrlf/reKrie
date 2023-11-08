@@ -16,7 +16,7 @@ return new class extends Migration
 
         Schema::table('users', function (Blueprint $table)
         {
-            $table->string('cpf', 11)->after('name');
+            $table->string('cpf', 11)->nullable()->after('name');
             $table->string('telefone', 20)->nullable()->after('cpf');
             $table->tinyInteger('situacao')->default(1)->after('remember_token');
             $table->tinyInteger('admin')->default(0)->after('situacao');
