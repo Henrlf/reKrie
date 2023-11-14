@@ -109,7 +109,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/carrinhoCompra/{idCarrinho}', [CarrinhoCompraController::class, 'delete'])->name('carrinhocompra.delete');
 });
 
-//---------------------------------------------------------------------------------------------------------------------------------------
+// Auth ----------------------------------------------------------------------------------------------------------------
 Route::get('login/github', [AuthenticatedSessionController::class, 'redirectToGitHub'])->name('login.github');
 Route::get('login/github/callback', [AuthenticatedSessionController::class, 'handleGitHubCallback']);
 
@@ -118,5 +118,11 @@ Route::get('login/google/callback', [AuthenticatedSessionController::class, 'han
 
 Route::get('login/facebook', [AuthenticatedSessionController::class, 'redirectToFacebook'])->name('login.facebook');
 Route::get('login/facebook/callback', [AuthenticatedSessionController::class, 'handleFacebookCallback']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/auth/logout', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
+});
+
+//----------------------------------------------------------------------------------------------------------------------
 
 require __DIR__ . '/auth.php';

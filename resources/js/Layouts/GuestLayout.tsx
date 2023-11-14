@@ -131,7 +131,7 @@ function loggedUserLayout(user: User) {
                     <NavDropdown.Item href="/usuario/orcamento">Orçamentos</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/pedido">Meus pedidos</NavDropdown.Item>
                     <NavDropdown.Divider/>
-                    <NavDropdown.Item eventKey={0}>Sair</NavDropdown.Item>
+                    <NavDropdown.Item href="/auth/logout" eventKey={0}>Sair</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
         </>
@@ -164,7 +164,7 @@ function loggedAdminLayout(user: User) {
                     <NavDropdown.Item href="/">Another action</NavDropdown.Item>
                     <NavDropdown.Item href="/">Something</NavDropdown.Item>
                     <NavDropdown.Divider/>
-                    <NavDropdown.Item eventKey={0}>Sair</NavDropdown.Item>
+                    <NavDropdown.Item href="/auth/logout" eventKey={0}>Sair</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
         </>
