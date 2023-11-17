@@ -49,7 +49,7 @@ export default function Guest({ user, children }: PropsWithChildren<{ user: any 
                 theme="colored"
             />
             <footer>
-                <Container className="bg-dark text-light" style={{ "minWidth": "100%" }}>
+                <Container className="bg-gray-800 text-light" style={{ "minWidth": "100%" }}>
                     <Row className="pt-4 justify-content-center">
                         <Col md={3} className="d-flex justify-content-end">
                             <div>
