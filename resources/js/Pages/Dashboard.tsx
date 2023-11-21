@@ -6,10 +6,11 @@ import { Button, ButtonGroup, Card, Container, Carousel, Dropdown } from "react-
 import { toast } from "react-toastify";
 import Separator from "@/Components/Separator";
 import axios from "axios";
-import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
-
 export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any }>) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const [sortedProdutos, setSortedProdutos] = useState(produtos);
+    const [sortOption, setSortOption] = useState<'menor' | 'maior'>('menor');
 
     const addProdutoCarrinho = (idProduto: any) => {
         axios.post(route('carrinhocompra.create', { idProduto: idProduto }))
@@ -33,7 +34,28 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
     const handleImageClick = (index: number) => {
         setCurrentImageIndex(index);
     };
+    const handleSortChange = (option: 'menor' | 'maior') => {
+        // Novo estado para rastrear a opção selecionada
+        setSortOption(option);
+        // Inverta a ordem de ordenação quando a função for chamada
+        const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+        setSortOrder(newSortOrder);
 
+        // Clone o array original de produtos para evitar mutações diretas
+        const clonedProdutos = [...produtos];
+
+        // Ordene o array clonado com base no preço
+        clonedProdutos.sort((a, b) => {
+            // Certifique-se de que a.valor e b.valor são números antes de comparar
+            const priceA = typeof a.valor === 'number' ? a.valor : parseFloat(a.valor.replace('R$', '').replace(',', '.'));
+            const priceB = typeof b.valor === 'number' ? b.valor : parseFloat(b.valor.replace('R$', '').replace(',', '.'));
+
+            return newSortOrder === 'asc' ? priceA - priceB : priceB - priceA;
+        });
+
+        // Atualize o estado dos produtos ordenados com o array ordenado
+        setSortedProdutos(clonedProdutos);
+    };
     return (
         <GuestLayout user={auth.user}>
             <Head title="Dashboard" />
@@ -68,7 +90,6 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                                                 </Button>
                                             </ButtonGroup>
                                         </div>
-
                                     </Carousel.Caption>
                                 </Carousel.Item>
                             ))}
@@ -77,7 +98,34 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                 </Container>
                 {/* Lista de Produtos */}
                 <div className="d-flex justify-content-around p-3 flex-wrap">
-                    {produtos.map((produto: any) => (
+                    <div className="mb-2 w-100">
+                        <Dropdown style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <Dropdown.Toggle
+                                variant="secondary"
+                                id="dropdown-basic"
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    color: 'black'}}>
+                                <span style={{fontWeight: 'bold' }}>Ordenar por:</span>
+                                <span style={{ color: 'blue' }}> {sortOption === 'menor' ? 'Menor preço' : 'Maior preço'}</span>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu
+                                style={{marginLeft:'60px', backgroundColor: 'ButtonFace',opacity:0.9}}>
+                                <Dropdown.Item
+                                    onClick={() => handleSortChange('menor')}
+                                    active={sortOption === 'menor'}
+                                    style={{backgroundColor: 'transparent', color: 'blue' }}
+                                >Menor preço</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handleSortChange('maior')}
+                                    active={sortOption === 'maior'}
+                                    style={{ backgroundColor: 'transparent', color: 'blue' }}
+                                >Maior preço </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+                    {sortedProdutos.map((produto: any) => (
                         <div key={"product_card_" + produto.id} className="div-product">
                             <Card key={"card_" + produto.id} className="div-product-card">
                                 <Card.Img variant="top" src={produto.imagem} style={{ height: '250px', objectFit: 'cover' }} />
