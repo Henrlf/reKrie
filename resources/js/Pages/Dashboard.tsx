@@ -12,8 +12,15 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const addProdutoCarrinho = (idProduto: any) => {
-        // ... (código existente para adicionar produto ao carrinho)
+        axios.post(route('carrinhocompra.create', { idProduto: idProduto }))
+            .then(response => {
+                toast.success('Produto adicionado ao carrinho de compras.');
+            })
+            .catch(error => {
+                toast.error('Não foi possível adicionar o produto ao carrinho. Por favor, tente novamente.');
+            });
     };
+    console.log(produtos);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -44,19 +51,19 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                                         src={produto.imagem}
                                         alt={'Produto ${index + 1}'}
                                         onClick={() => handleImageClick(index)}
-                                        style={{ maxHeight: '400px', objectFit: 'cover' }}/>
+                                        style={{ maxHeight: '400px', objectFit: 'cover' }} />
                                     <Carousel.Caption>
                                         <h3>{produto.nome}</h3>
                                         <p>{produto.descricao}</p>
                                         <div className="text-center col-lg-6 col-mg-12 mx-auto">
-                                            <p style={{marginBottom: '0', background: 'rgba(255, 255, 255, 0.7)', color: 'black', fontWeight: 'bold', borderTopLeftRadius: '50px', borderTopRightRadius: '50px' }} className="mx-auto">
+                                            <p style={{ marginBottom: '0', background: 'rgba(255, 255, 255, 0.7)', color: 'black', fontWeight: 'bold', borderTopLeftRadius: '50px', borderTopRightRadius: '50px' }} className="mx-auto">
                                                 {Number(produto.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                             </p>
                                             <ButtonGroup className="div-product-button-group mx-auto">
-                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{width:'60%',borderBottomLeftRadius:'50px', opacity: 0.8 }}>
+                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{ width: '60%', borderBottomLeftRadius: '50px', opacity: 0.8 }}>
                                                     Adicionar ao carrinho
                                                 </Button>
-                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{width:'40%',borderBottomRightRadius:'50px',opacity: 0.8 }}>
+                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{ width: '40%', borderBottomRightRadius: '50px', opacity: 0.8 }}>
                                                     Comprar
                                                 </Button>
                                             </ButtonGroup>
