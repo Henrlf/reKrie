@@ -1,7 +1,7 @@
 import { PageProps } from '@/types';
 import React, { useEffect, useState } from "react";
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head } from "@inertiajs/react";
+import { Head, Link} from "@inertiajs/react";
 import { Button, ButtonGroup, Card, Container, Carousel, Dropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Separator from "@/Components/Separator";
@@ -32,7 +32,9 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
     }, [produtos.length]);
 
     const handleImageClick = (index: number) => {
-        setCurrentImageIndex(index);
+        const produto = produtos[index];
+        // Redirecionar para a página de detalhes do produto
+        window.location.href = route('produto.detalhes', { codigo: produto.codigo });
     };
     const handleSortChange = (option: 'menor' | 'maior') => {
         // Novo estado para rastrear a opção selecionada
@@ -68,12 +70,13 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                             onSelect={(selectedIndex, e) => handleImageClick(selectedIndex)}>
                             {produtos.map((produto: any, index: number) => (
                                 <Carousel.Item key={produto.id}>
+                                    <Link href={route('produto.detalhes', { codigo: produto.id})}>
                                     <img
                                         className="d-block w-100"
                                         src={produto.imagem}
                                         alt={'Produto ${index + 1}'}
                                         onClick={() => handleImageClick(index)}
-                                        style={{ maxHeight: '400px', objectFit: 'cover' }} />
+                                        style={{ maxHeight: '400px', objectFit: 'cover' }} /></Link>
                                     <Carousel.Caption>
                                         <h3>{produto.nome}</h3>
                                         <p>{produto.descricao}</p>
@@ -128,7 +131,8 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                     {sortedProdutos.map((produto: any) => (
                         <div key={"product_card_" + produto.id} className="div-product">
                             <Card key={"card_" + produto.id} className="div-product-card">
-                                <Card.Img variant="top" src={produto.imagem} style={{ height: '250px', objectFit: 'cover' }} />
+                            <Link href={route('produto.detalhes', { codigo: produto.id })}>
+                                <Card.Img variant="top" src={produto.imagem} style={{ height: '250px', objectFit: 'cover' }} /></Link>
                                 <Card.Body className="p-2">
                                     <Card.Text className="text-body-secondary h6 mt-1 float-end">
                                         {Number(produto.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}

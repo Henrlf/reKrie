@@ -54,6 +54,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //Produtos ------------------------------------------------------------------------------------------------------------------------------
 
+Route::get('/produto/detalhes/{codigo}', function ($codigo) {
+    $produto = Produto::findOneByCodigo($codigo); 
+    if ($produto) {
+        return Inertia::render('ProdutoDetalhes', ['produto' => $produto]);
+    } else {
+        abort(404, 'Product not found');
+    }
+})->middleware(['auth', 'verified'])->name('produto.detalhes');
+
 Route::get('/register-product', function () {
     return Inertia::render('Produto/RegisterProduct');
 })->middleware(['auth', 'verified'])->name('produto.register');

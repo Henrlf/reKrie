@@ -45,4 +45,8 @@ class Produto extends BaseModel
     {
         return $this->hasMany(CarrinhoCompra::class, 'idProduto', 'id');
     }
+    public static function findOneByCodigo($codigo)
+    {
+        return self::where('id', $codigo)->first();
+    }
 }
