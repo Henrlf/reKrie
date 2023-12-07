@@ -1,13 +1,14 @@
+
 import { PageProps } from '@/types';
-import React from 'react';
+import React, { useState } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head } from '@inertiajs/react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const addProdutoCarrinho = (idProduto: any) => {
-  axios.post(route('carrinhocompra.create', { idProduto: idProduto }))
+const addProdutoCarrinho = (idProduto: any, quantidade: number) => {
+  axios.post(route('carrinhocompra.create', { idProduto, quantidade }))
     .then(response => {
       toast.success('Produto adicionado ao carrinho de compras.');
     })
@@ -28,38 +29,65 @@ type ProdutoDetalhesProps = PageProps<{
 }>;
 
 const ProdutoDetalhes: React.FC<ProdutoDetalhesProps> = ({ auth, produto }) => {
+  const [quantidade, setQuantidade] = useState<number>(1);
+
+  const handleQuantidadeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuantidade = parseInt(event.target.value, 10);
+    setQuantidade(isNaN(newQuantidade) ? 1 : newQuantidade);
+  };
+
   return (
     <GuestLayout user={auth.user}>
       <Head title={`Detalhes do Produto - ${produto.nome}`} />
-      <div className="col-lg-12 pt-4 mx-auto">
+      <div className="col-lg-10 pt-4 mx-auto">
         <div className="row">
-          <div className="col-lg-3 ml-40">
-            <img
-              className="img-fluid"
-              src={produto.imagem}
-              alt={produto.nome}
-            />
+          <div className="col-lg-6 mb-4">
+            <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+              <img
+                className="img-fluid"
+                src={produto.imagem}
+                alt={produto.nome}
+                style={{ width: '100%', height: 'auto', borderRadius: '5px' }}
+              />
+            </div>
           </div>
-          <div className="col-lg-7 d-block">
+          <div className="col-lg-6 mb-4">
             <h2>{produto.nome}</h2>
-            <p>{produto.descricao}</p>
-            <div className="col-lg-5 mr-0">
-              <p>
-                Valor: {Number(produto.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-              </p>
-              <div className="d-flex flex-column">
-                <label htmlFor="quantidade">Quantidade:</label>
-                <input type="number" id="quantidade" className="form-control mb-2" min="1" defaultValue="1" />
-                <ButtonGroup className="div-product-button-group mx-auto">
-                  <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{ width: '60%', borderBottomLeftRadius: '50px', opacity: 0.8 }}>
-                    Adicionar ao carrinho
-                  </Button>
-                  <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{ width: '40%', borderBottomRightRadius: '50px', opacity: 0.8 }}>
-                    Comprar
-                  </Button>
-                </ButtonGroup>
+            <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '5px' }}>
+              <p>{produto.descricao}</p>
+            </div>
+            <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '5px', marginTop: '15px', width: '50%', marginLeft: 'auto', textAlign: 'right' }}>
+              <div className="d-flex justify-content align-items-center mb-2">
+                <label htmlFor="quantidade" style={{ marginLeft: '15px', marginRight: '2px' }}>Quantidade:</label>
+                <input type="number" id="quantidade" className="form-control" min="1" value={quantidade} onChange={handleQuantidadeChange} style={{ width: '70px' }} />
+                <p className='ml-10 mb-0'>
+                  Total: {Number(produto.valor * quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                </p>
+              </div>
+              <ButtonGroup className="div-product-button-group mx-auto">
+                <Button onClick={() => addProdutoCarrinho(produto.id, quantidade)} className="btn btn-outline-success text-white" style={{ width: '60%', opacity: 0.8 }}>
+                  Adicionar ao carrinho
+                </Button>
+                <Button onClick={() => addProdutoCarrinho(produto.id, quantidade)} className="btn btn-outline-success text-white" style={{ width: '40%', opacity: 0.8 }}>
+                  Comprar
+                </Button>
+              </ButtonGroup>
+            </div>
+            <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '5px', marginTop: '15px', width: '50%', marginLeft: 'auto'}}>
+              <div>
+                <h5>Informe seu CEP para calcular o Frete</h5>
+                <form action="" className="ml-5 form-inline formShipping">
+                  <input style={{border:'0px',borderRadius:'5px'}} 
+                    placeholder="99999-999"
+                    type="number"
+                  />
+                    <ButtonGroup className="div-product-button">
+                    <Button className="btn btn-outline-success ml-5 text-white">Calcular</Button>
+                  </ButtonGroup>
+                </form>
               </div>
             </div>
+
           </div>
         </div>
       </div>

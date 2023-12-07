@@ -85,10 +85,10 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                                                 {Number(produto.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                             </p>
                                             <ButtonGroup className="div-product-button-group mx-auto">
-                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{ width: '60%', borderBottomLeftRadius: '50px', opacity: 0.8 }}>
+                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="btn btn-outline-success text-white" style={{ width: '60%', borderBottomLeftRadius: '50px', opacity: 0.8 }}>
                                                     Adicionar ao carrinho
                                                 </Button>
-                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button" style={{ width: '40%', borderBottomRightRadius: '50px', opacity: 0.8 }}>
+                                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="btn btn-outline-success text-white" style={{ width: '40%', borderBottomRightRadius: '50px', opacity: 0.8 }}>
                                                     Comprar
                                                 </Button>
                                             </ButtonGroup>
@@ -144,10 +144,10 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
                                 </Card.Body>
                             </Card>
                             <ButtonGroup className="div-product-button-group mx-auto" style={{ width: 'calc(100% - 2px)' }}>
-                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button">
+                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="btn btn-outline-success text-white">
                                     Adicionar ao carrinho
                                 </Button>
-                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="div-product-button">
+                                <Button onClick={() => addProdutoCarrinho(produto.id)} className="btn btn-outline-success text-white">
                                     Comprar
                                 </Button>
                             </ButtonGroup>
