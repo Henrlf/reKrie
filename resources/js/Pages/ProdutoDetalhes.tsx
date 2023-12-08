@@ -1,11 +1,11 @@
 
 import { PageProps } from '@/types';
-import React, { useState } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head } from '@inertiajs/react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import React, { useState, useEffect } from 'react';
 
 const addProdutoCarrinho = (idProduto: any, quantidade: number) => {
   axios.post(route('carrinhocompra.create', { idProduto, quantidade }))
@@ -34,10 +34,26 @@ type ProdutoDetalhesProps = PageProps<{
 
 const ProdutoDetalhes: React.FC<ProdutoDetalhesProps> = ({ auth, produto }) => {
   const [quantidade, setQuantidade] = useState<number>(1);
+  const [cep, setCep] = useState<string>('');
 
   const handleQuantidadeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantidade = parseInt(event.target.value, 10);
     setQuantidade(isNaN(newQuantidade) ? 1 : newQuantidade);
+  };
+
+  const handleCalcularFrete = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    try {
+      const url = '/api/shipping';
+      const response = await fetch(url); 
+      const responseBody = await response.json();
+      
+      alert(responseBody.Data);
+    } catch (error) {
+      console.error('Erro ao calcular frete:', error);
+      // Adicione o tratamento de erro conforme necessário
+    }
   };
 
   return (
@@ -92,12 +108,17 @@ const ProdutoDetalhes: React.FC<ProdutoDetalhesProps> = ({ auth, produto }) => {
                 </div>
                 <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '5px', marginTop: '15px', marginLeft: 'auto' }}>
                   <h5>Informe seu CEP para calcular o Frete</h5>
-                  <form action="" className="ml-5 form-inline formShipping">
-                    <input style={{ border: '0px', borderRadius: '5px' }}
+                  <form action="" className="ml-5 form-inline formShipping" onSubmit={handleCalcularFrete}>
+                    <input
+                      style={{ border: '0px', borderRadius: '5px' }}
                       placeholder="99999-999"
-                      type="number" />
+                      type="text"
+                      value={cep}
+                      onChange={(e) => setCep(e.target.value)}/>
                     <ButtonGroup className="div-product-button">
-                      <Button className="btn btn-outline-success ml-5 text-white">Calcular</Button>
+                      <Button className="btn btn-outline-success ml-5 text-white" type="submit">
+                        Calcular
+                      </Button>
                     </ButtonGroup>
                   </form>
                 </div>
