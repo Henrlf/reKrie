@@ -61,7 +61,7 @@ Route::get('/produto/detalhes/{codigo}', function ($codigo) {
     } else {
         abort(404, 'Product not found');
     }
-})->middleware(['auth', 'verified'])->name('produto.detalhes');
+})->name('produto.detalhes');
 
 Route::get('/register-product', function () {
     return Inertia::render('Produto/RegisterProduct');
