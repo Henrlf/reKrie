@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/shipping','App\Http\Controllers\ShippingController@calcShipping');
+Route::get('/shipping/{cep}','App\Http\Controllers\ShippingController@calcShipping');

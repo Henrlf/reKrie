@@ -5,7 +5,9 @@ import { Head } from '@inertiajs/react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import InputMask from 'react-input-mask';
+
 
 const addProdutoCarrinho = (idProduto: any, quantidade: number) => {
   axios.post(route('carrinhocompra.create', { idProduto, quantidade }))
@@ -35,6 +37,7 @@ type ProdutoDetalhesProps = PageProps<{
 const ProdutoDetalhes: React.FC<ProdutoDetalhesProps> = ({ auth, produto }) => {
   const [quantidade, setQuantidade] = useState<number>(1);
   const [cep, setCep] = useState<string>('');
+  const [frete, setFrete] = useState<any>(null);
 
   const handleQuantidadeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantidade = parseInt(event.target.value, 10);
@@ -43,13 +46,21 @@ const ProdutoDetalhes: React.FC<ProdutoDetalhesProps> = ({ auth, produto }) => {
 
   const handleCalcularFrete = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
+    // Verificar se o campo do CEP está preenchido
+    if (!cep.trim()) {
+      toast.error('Por favor, informe um CEP válido.');
+      return;
+    }
+
     try {
-      const url = '/api/shipping';
-      const response = await fetch(url); 
+      // Adicionar o valor do CEP à URL da solicitação
+      const url = `/api/shipping/${cep}?altura=${produto.altura}&largura=${produto.largura}&comprimento=${produto.comprimento}`;
+      const response = await fetch(url);
       const responseBody = await response.json();
-      
-      alert(responseBody.Data);
+
+      // Armazenar os valores do frete no estado
+      setFrete(responseBody.data);
     } catch (error) {
       console.error('Erro ao calcular frete:', error);
       // Adicione o tratamento de erro conforme necessário
@@ -109,18 +120,37 @@ const ProdutoDetalhes: React.FC<ProdutoDetalhesProps> = ({ auth, produto }) => {
                 <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '5px', marginTop: '15px', marginLeft: 'auto' }}>
                   <h5>Informe seu CEP para calcular o Frete</h5>
                   <form action="" className="ml-5 form-inline formShipping" onSubmit={handleCalcularFrete}>
-                    <input
+                    <InputMask
+                      mask="99999-999"
+                      maskChar=""
                       style={{ border: '0px', borderRadius: '5px' }}
                       placeholder="99999-999"
                       type="text"
                       value={cep}
-                      onChange={(e) => setCep(e.target.value)}/>
+                      onChange={(e: any) => setCep(e.target.value)}
+                    />
                     <ButtonGroup className="div-product-button">
                       <Button className="btn btn-outline-success ml-5 text-white" type="submit">
                         Calcular
                       </Button>
                     </ButtonGroup>
                   </form>
+                  <div className='mt-1' style={{ textAlign: 'center' }}>
+                    {frete && (
+                      <div>
+                        <h5 className='m-4'>Informações de Frete</h5>
+                        <div style={{ textAlign: 'left' }}>
+                          <p>CEP: {frete.cep}</p>
+                          <p>Estado: {frete.state}</p>
+                          <p>Cidade: {frete.city}</p>
+                          {frete.street && <p>Endereço: {frete.street}</p>} {/* Renderiza somente se a rua estiver presente */}
+                          <p>Serviço: {frete.service}</p>
+                          <p>Prazo de Entrega: {frete.prazo_entrega}</p>
+                          <p>Valor do Frete: {Number(frete.valor_frete).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
