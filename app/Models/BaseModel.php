@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class BaseModel extends Model
 {
@@ -41,6 +42,18 @@ class BaseModel extends Model
             return $model::query()
                 ->where('id', '=', $id)
                 ->first();
+        }
+
+        return null;
+    }
+
+    public static function findAllFromUser()
+    {
+        $class = get_called_class();
+
+        if (Auth::check() && property_exists($class, 'table'))
+        {
+            return self::findAll()->where('idUsuario', '=', Auth::id());
         }
 
         return null;

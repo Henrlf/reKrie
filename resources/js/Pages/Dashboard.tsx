@@ -63,7 +63,7 @@ export default function Dashboard({ auth, produtos }: PageProps<{ produtos: any 
             <Head title="Dashboard" />
             <div className="w-90 bg-gray-300">
                 <Container className="text-center">
-                    <div className="col-lg-12 pt-1 mx-auto">
+                    <div className="col-lg-12 mx-auto">
                         {/* Carrossel de Imagens */}
                         <Carousel
                             activeIndex={currentImageIndex}

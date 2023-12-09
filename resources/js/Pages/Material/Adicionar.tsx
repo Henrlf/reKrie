@@ -6,7 +6,7 @@ import React, {FormEventHandler, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCube, faSave} from '@fortawesome/free-solid-svg-icons'
 import BtnVoltar from "@/Components/Buttons/BtnVoltar";
-import {Id, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function Adicionar({auth}: PageProps) {
     const {data, setData, post, processing, errors, reset} = useForm({
@@ -44,7 +44,7 @@ export default function Adicionar({auth}: PageProps) {
     return (
         <GuestLayout user={auth.user}>
             <Head title="Materiais"/>
-            <Container className="w-75 mt-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
+            <Container className="w-75 my-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
                     <div className="w-50 d-flex flex-row ">
                         <FontAwesomeIcon className="mx-sm-2 mt-lg-2 h3" icon={faCube}/>

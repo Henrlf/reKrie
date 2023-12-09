@@ -6,6 +6,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\CarrinhoCompraController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProfileController;
+use \App\Http\Controllers\OrcamentoController;
 use App\Models\Endereco;
 use App\Models\Material;
 use App\Models\Produto;
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //Produtos ------------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/produto/detalhes/{codigo}', function ($codigo) {
-    $produto = Produto::findOneByCodigo($codigo); 
+    $produto = Produto::findOneById($codigo);
     if ($produto) {
         return Inertia::render('ProdutoDetalhes', ['produto' => $produto]);
     } else {
@@ -130,6 +131,27 @@ Route::get('login/facebook/callback', [AuthenticatedSessionController::class, 'h
 
 Route::middleware('auth')->group(function () {
     Route::get('/auth/logout', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
+});
+
+//Orçamento----------------------------------------------------------------------------------------------------------------------
+
+Route::get('/orcamento', function () {
+    return Inertia::render('Orcamento/Listagem', ['orcamentos' => \App\Models\Orcamento::findAllFromUser()]);
+})->middleware(['auth', 'verified'])->name('orcamento.listagem');
+
+Route::get('/orcamento/adicionar', function () {
+    return Inertia::render('Orcamento/Adicionar', ['materiais' => \App\Models\Material::findAllActive()]);
+})->middleware(['auth', 'verified'])->name('orcamento.adicionar');
+
+Route::get('/orcamento/editar/{id}', function () {
+    $id = request()->route()->parameter('id');
+    return Inertia::render('Orcamento/Editar', ['orcamento' => \App\Models\Orcamento::findOneById($id)]);
+})->middleware(['auth', 'verified'])->name('orcamento.editar');
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/orcamento', [OrcamentoController::class, 'create'])->name('orcamento.create');
+//    Route::put('/orcamento', [EnderecoController::class, 'update'])->name('endereco.update');
 });
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(CarrinhoCompra::class, 'idUsuario', 'id');
     }
+
+    public function orcamento()
+    {
+        return $this->hasMany(Orcamento::class, 'idUsuario', 'id');
+    }
 }

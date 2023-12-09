@@ -4,32 +4,33 @@ import {Head} from "@inertiajs/react";
 import {Button, Container, Nav, Table} from "react-bootstrap";
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPenToSquare, faCube, faPlus, faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
+import {faEye, faHandshake, faPlus, faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
 
-export default function Listagem({auth, materiais}: PageProps<{ materiais: any }>) {
+export default function Listagem({auth, orcamentos}: PageProps<{ orcamentos: any }>) {
+
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
-    const registros = materiais.slice(firstIndex, lastIndex);
-    const npage = Math.ceil(materiais.length / recordsPerPage);
+    const registros = orcamentos.slice(firstIndex, lastIndex);
+    const npage = Math.ceil(orcamentos.length / recordsPerPage);
     const numbers = [...Array(npage + 1).keys()].slice(1);
 
     return (
         <GuestLayout user={auth.user}>
-            <Head title="Materiais"/>
+            <Head title="Orçamentos"/>
             <Container className="w-75 my-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
                     <div className="w-50 d-flex flex-row ">
-                        <FontAwesomeIcon className="mx-sm-2 mt-lg-2 h3" icon={faCube}/>
-                        <h3 className="my-auto">Listagem de Materiais</h3>
+                        <FontAwesomeIcon className="mx-sm-2 mt-lg-2 h3" icon={faHandshake}/>
+                        <h3 className="my-auto">Meus orçamentos</h3>
                     </div>
 
                     <div className="w-50 d-flex flex-row-reverse">
-                        <div className="btn-group w-25">
-                            <Button href="/material/adicionar" variant="success" className="shadow border d-flex justify-content-center align-items-center h-button" style={{background: "#02ad37"}}>
+                        <div className="btn-group">
+                            <Button href="/orcamento/adicionar" variant="success" className="shadow border d-flex justify-content-center align-items-center h-button" style={{background: "#02ad37"}}>
                                 <FontAwesomeIcon className="mt-lg-2 h6" style={{marginRight: '10px'}} icon={faPlus}/>
-                                Adicionar
+                                Realizar orçamento
                             </Button>
                         </div>
                     </div>
@@ -38,26 +39,26 @@ export default function Listagem({auth, materiais}: PageProps<{ materiais: any }
                 <Table striped hover variant="light" className="mt-3 shadow">
                     <thead>
                     <tr>
-                        <th style={{width: "5%", background: '#cecece', borderTopLeftRadius: '5px'}}></th>
-                        <th style={{width: "20%", background: '#cecece'}}>Nome</th>
-                        <th style={{background: '#cecece'}}>Descrição</th>
-                        <th style={{width: "15%", background: '#cecece'}}>Situação</th>
-                        <th style={{width: "15%", background: '#cecece', borderTopRightRadius: '5px'}}>Alteração</th>
+                        <th className='table-header-bg w-5' style={{borderTopLeftRadius: '5px'}}></th>
+                        <th className='table-header-bg'>Descrição</th>
+                        <th className='table-header-bg w-10'>Valor</th>
+                        <th className='table-header-bg w-20'>Situação</th>
+                        <th className='table-header-bg w-15' style={{borderTopRightRadius: '5px'}}>Data do orçamento</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    {registros.map((material: any, i: any) => (
+                    {registros.map((orcamento: any, i: any) => (
                         <tr key={i}>
                             <td className="justify-content-center">
-                                <Button href={"/material/editar/" + material.id} className="justify-content-center w-100" variant="primary" style={{borderRadius: '3px'}}>
-                                    <FontAwesomeIcon className="ml-0.5" icon={faPenToSquare}/>
+                                <Button href={"/orcamento/editar/" + orcamento.id} className="justify-content-center w-100" variant="primary" style={{borderRadius: '3px'}}>
+                                    <FontAwesomeIcon className="ml-0.5" icon={faEye}/>
                                 </Button>
                             </td>
-                            <td>{material.nome}</td>
-                            <td>{material.descricao}</td>
-                            <td>{material.situacao ? 'Habilitado' : 'Desabilitado'}</td>
-                            <td>{new Date(material.updated_at).toLocaleString()}</td>
+                            <td>{orcamento.descricao}</td>
+                            <td>{'R$ ' + orcamento.valor.toFixed(2)}</td>
+                            <td>{orcamento.situacaoDescription}</td>
+                            <td>{new Date(orcamento.created_at).toLocaleDateString()}</td>
                         </tr>
                     ))}
                     </tbody>

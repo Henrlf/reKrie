@@ -22,7 +22,7 @@ export default function Guest({ user, children }: PropsWithChildren<{ user: any 
     }
 
     return (
-        <div>
+        <div className="min-h-screen d-flex flex-column">
             <header>
                 <Navbar bg="gray-800" data-bs-theme="dark" className="lh-lg">
                     <Container className="flex-nowrap" style={{ "minWidth": "75%" }}>
@@ -32,23 +32,11 @@ export default function Guest({ user, children }: PropsWithChildren<{ user: any 
                 </Navbar>
             </header>
 
-            <main className="min-h-screen flex flex-col items-center bg-body-secondary">
+            <main className="flex flex-col items-center bg-body-secondary flex-fill">
                 {children}
             </main>
 
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={true}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss={false}
-                draggable
-                pauseOnHover={false}
-                theme="colored"
-            />
-            <footer>
+            <footer className="d-flex flex-column w-100 bottom-0">
                 <Container className="bg-gray-800 text-light" style={{ "minWidth": "100%" }}>
                     <Row className="pt-4 justify-content-center">
                         <Col md={3} className="d-flex justify-content-end">
@@ -68,7 +56,6 @@ export default function Guest({ user, children }: PropsWithChildren<{ user: any 
                                 <ul className="list-unstyled">
                                     <li><a href="/categorias/prontaEntrega">À pronta entrega</a></li>
                                     <li><a href="/categorias/encomendas">Encomendas</a></li>
-                                    {/* Adicione mais categorias conforme necessário */}
                                 </ul>
                             </div>
                         </Col>
@@ -92,6 +79,18 @@ export default function Guest({ user, children }: PropsWithChildren<{ user: any 
                 </Container>
             </footer>
 
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+                theme="colored"
+            />
         </div>
     );
 }
@@ -173,7 +172,7 @@ function loggedUserLayout(user: User) {
                 <NavDropdown title={user.name} menuVariant="dark">
                     <NavDropdown.Item href="/usuario/perfil">Perfil</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/endereco">Endereços</NavDropdown.Item>
-                    <NavDropdown.Item href="/usuario/orcamento">Orçamentos</NavDropdown.Item>
+                    <NavDropdown.Item href="/orcamento">Orçamentos</NavDropdown.Item>
                     <NavDropdown.Item href="/usuario/pedido">Meus pedidos</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/auth/logout" eventKey={0}>Sair</NavDropdown.Item>

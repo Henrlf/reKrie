@@ -2,8 +2,16 @@
     height: 37px !important;
 }
 
+.w-5 {
+    width: 5%;
+}
+
 .w-10 {
     width: 10%;
+}
+
+.w-15 {
+    width: 15%;
 }
 
 .w-20 {
@@ -173,4 +181,32 @@
     justify-content: center;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.div-resumo-carrinho{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+}
+
+.div-resumo-carrinho .div-title{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.div-resumo-carrinho .div-totais{
+    display: flex;
+    max-width: 18%;
+    justify-content: left;
+    flex-wrap: wrap;
+    color: #5c5c62;
+}
+
+.table-header-bg{
+    background: #cecece !important;
+}
+
+.disabled{
+    background-color: #e7e7e7;
 }

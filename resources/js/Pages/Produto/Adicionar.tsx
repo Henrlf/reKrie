@@ -72,7 +72,7 @@ export default function Adicionar({auth, materiais}: PageProps<{ materiais: any 
     return (
         <GuestLayout user={auth.user}>
             <Head title="Produtos"/>
-            <Container className="w-75 mt-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
+            <Container className="w-75 my-4 py-3 bg-white shadow-md overflow-hidden sm:rounded-lg text-center">
                 <div className="row mb-4">
                     <div className="w-50 d-flex flex-row ">
                         <FontAwesomeIcon className="mx-sm-2 mt-lg-2 h3" icon={faShoppingBasket}/>

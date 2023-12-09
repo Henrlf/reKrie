@@ -27,4 +27,9 @@ class Material extends BaseModel
     {
         return $this->hasMany(Produto::class, 'idMaterial', 'id');
     }
+
+    public function orcamento()
+    {
+        return $this->hasMany(Orcamento::class, 'idMaterial', 'id');
+    }
 }
