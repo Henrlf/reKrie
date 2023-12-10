@@ -136,7 +136,9 @@ Route::middleware('auth')->group(function () {
 //Orçamento----------------------------------------------------------------------------------------------------------------------
 
 Route::get('/orcamento', function () {
-    return Inertia::render('Orcamento/Listagem', ['orcamentos' => \App\Models\Orcamento::findAllFromUser()]);
+    $user = \App\Models\User::findOneById(\Illuminate\Support\Facades\Auth::id());
+    $orcamentos = $user->admin ? \App\Models\Orcamento::findAll() : \App\Models\Orcamento::findAllFromUser();
+    return Inertia::render('Orcamento/Listagem', ['orcamentos' => $orcamentos]);
 })->middleware(['auth', 'verified'])->name('orcamento.listagem');
 
 Route::get('/orcamento/adicionar', function () {
@@ -145,13 +147,14 @@ Route::get('/orcamento/adicionar', function () {
 
 Route::get('/orcamento/editar/{id}', function () {
     $id = request()->route()->parameter('id');
-    return Inertia::render('Orcamento/Editar', ['orcamento' => \App\Models\Orcamento::findOneById($id)]);
+    $orcamento = \App\Models\Orcamento::findOneById($id);
+    return Inertia::render('Orcamento/Editar', ['orcamento' => $orcamento, 'usuario' => \App\Models\User::findOneById($orcamento->idUsuario)]);
 })->middleware(['auth', 'verified'])->name('orcamento.editar');
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/orcamento', [OrcamentoController::class, 'create'])->name('orcamento.create');
-//    Route::put('/orcamento', [EnderecoController::class, 'update'])->name('endereco.update');
+    Route::put('/orcamento/avancar/{idOrcamento}', [OrcamentoController::class, 'avancar'])->name('orcamento.avancar');
+    Route::put('/orcamento/rejeitar/{idOrcamento}', [OrcamentoController::class, 'rejeitar'])->name('orcamento.rejeitar');
 });
 
 //----------------------------------------------------------------------------------------------------------------------

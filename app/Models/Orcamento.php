@@ -47,17 +47,7 @@ class Orcamento extends BaseModel
     {
         $models = parent::findAll();
 
-        foreach ($models as $model)
-        {
-            $material = Db::table('material')
-                ->where('id', '=', $model->idMaterial)
-                ->first();
-
-            $model->situacaoDescription = self::getSituacaoLabel($model->situacao);
-            $model->materialDescription = $material->nome;
-        }
-
-        return $models;
+        return self::getDescriptions($models);
     }
 
     public static function findAllFromUser()
@@ -84,31 +74,50 @@ class Orcamento extends BaseModel
                 ->where('id', '=', $id)
                 ->first();
 
+            return self::getDescriptions([$model])[0];
+        }
+
+        return null;
+    }
+
+    public static function getDescriptions($models)
+    {
+        foreach ($models as $model)
+        {
             $material = Db::table('material')
                 ->where('id', '=', $model->idMaterial)
                 ->first();
 
+            $usuario = Db::table('users')
+                ->where('id', '=', $model->idUsuario)
+                ->first();
+
             $model->situacaoDescription = self::getSituacaoLabel($model->situacao);
             $model->materialDescription = $material->nome;
-
-            return $model;
+            $model->usuarioDescription = $usuario->name;
         }
 
-        return null;
+        return $models;
     }
 
     public static function getSituacaoLabel($situacao)
     {
         switch ($situacao)
         {
-            case 0:
-                return 'Cancelado';
             case 1:
-                return 'Aberto';
+                return 'Em análise';
             case 2:
-                return 'Em trânsito';
+                return 'Em produção';
             case 3:
+                return 'Pronto para envio';
+            case 4:
+                return 'Em trânsito';
+            case 5:
                 return 'Entrege';
+            case 6:
+                return 'Rejeitado';
+            case 7:
+                return 'Cancelado';
         }
 
         return null;

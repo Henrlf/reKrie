@@ -6,6 +6,7 @@ use App\Http\Requests\Orcamento\OrcamentoRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class OrcamentoController extends Controller
 {
@@ -23,32 +24,27 @@ class OrcamentoController extends Controller
             'situacao' => 1
         ];
 
-        debug($request->input('idMaterial'));
-
         \App\Models\Orcamento::create($mappedData);
 
         return Redirect::route('orcamento.listagem');
     }
 
-    public function update(OrcamentoRequest $request): RedirectResponse
+    public function avancar(Request $request, $idOrcamento)
     {
-//        \App\Models\Produto::query()
-//            ->where('id', '=', $request->input('id'))
-//            ->update([
-//                'idMaterial' => $request->input('idMaterial'),
-//                'nome' => $request->input('nome'),
-//                'descricao' => $request->input('descricao'),
-//                'imagem' => $request->input('imagem'),
-//                'largura' => $request->input('largura'),
-//                'altura' => $request->input('altura'),
-//                'comprimento' => $request->input('comprimento'),
-//                'peso' => $request->input('peso'),
-//                'saldoEstoque' => 0,
-//                'valor' => $request->input('valor'),
-//                'situacao' => $request->input('situacao')
-//            ]);
+        $orcamento = \App\Models\Orcamento::findOneById($idOrcamento);
+        $orcamento->situacao++;
+        $orcamento->save();
 
-        return Redirect::route("orcamento.listagem");
+        return response()->json();
+    }
+
+    public function rejeitar(Request $request, $idOrcamento)
+    {
+        $orcamento = \App\Models\Orcamento::findOneById($idOrcamento);
+        $orcamento->situacao = 6;
+        $orcamento->save();
+
+        return response()->json();
     }
 
     public function toDb($value)

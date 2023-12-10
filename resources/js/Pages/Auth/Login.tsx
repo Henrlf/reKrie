@@ -53,7 +53,7 @@ export default function Login({status, canResetPassword}: { status?: string, can
         <GuestLayout user={undefined}>
             <Head title="Entrar" />
 
-            <div className="w-full sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg" style={{ "marginTop": "20vh" }}>
+            <div className="w-full sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg my-auto">
                 <div className="flex items-center justify-center">
                     <span className="ml-2 text-xl text-black">Faça seu login na ReKrie</span>
                 </div>

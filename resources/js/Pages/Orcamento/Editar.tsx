@@ -1,51 +1,54 @@
 import {PageProps} from "@/types";
 import GuestLayout from "@/Layouts/GuestLayout";
-import {Head, useForm} from "@inertiajs/react";
-import {Col, Container, Form, Row} from "react-bootstrap";
-import React, {FormEventHandler, useEffect, useState} from "react";
+import {Head} from "@inertiajs/react";
+import {Button, Col, Container, Form, InputGroup, Modal, Row} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHandshake, faSave} from '@fortawesome/free-solid-svg-icons'
+import {faHandshake, faLeftLong, faAnglesRight, faTimes, faCheck} from '@fortawesome/free-solid-svg-icons'
 import BtnVoltar from "@/Components/Buttons/BtnVoltar";
 import {toast} from "react-toastify";
 import {NumericFormat} from "react-number-format";
+import axios from "axios";
 
-export default function Adicionar({auth, orcamento}: PageProps<{ orcamento: any }>) {
-    const {data, setData, put, processing, errors, reset} = useForm({
-        id: orcamento.id,
-        descricao: orcamento.descricao,
-        idMaterial: orcamento.idMaterial,
-        valor: orcamento.valor,
-        largura: orcamento.largura,
-        altura: orcamento.altura,
-        comprimento: orcamento.comprimento,
-        peso: orcamento.peso,
-        situacao: orcamento.situacao
-    });
+export default function Adicionar({auth, orcamento, usuario}: PageProps<{ orcamento: any, usuario: any }>) {
+    const user = auth.user;
+
+    const avancarOrcamento = (idOrcamento: any) => {
+        axios.put(route('orcamento.avancar', {idOrcamento: idOrcamento}))
+            .then(response => {
+                localStorage.setItem('avancarSuccess', 'true');
+                window.location.reload();
+            })
+            .catch(error => {
+                toast.error('Não foi possível avançar a situação do orçamento. Por favor, tente novamente.');
+            });
+    };
+
+    const rejeitarOrcamento = (idOrcamento: any) => {
+        axios.put(route('orcamento.rejeitar', {idOrcamento: idOrcamento}))
+            .then(response => {
+                localStorage.setItem('rejeitarSuccess', 'true');
+                window.location.reload();
+            }).catch(error => {
+                toast.error('Não foi possível rejeitar este orçamento. Por favor, tente novamente.');
+            });
+    };
 
     const [validated, setValidated] = useState(false);
 
-    const submit: FormEventHandler = (event: { currentTarget: any; preventDefault: () => void; stopPropagation: () => void; }) => {
-        event.preventDefault();
-
-        if (event.currentTarget.checkValidity() === false) {
-            event.stopPropagation();
-            setValidated(true);
-            toast.error("Preencha os campos obrigatórios!")
-        } else {
-            try {
-                put(route("orcamento.create"));
-
-                toast.success('Orçamento realizado com sucesso.');
-            } catch (error) {
-                toast.success('Não foi possível finalizar o orçamento. Por favor, tente novamente.');
-            }
-        }
-    };
-
     useEffect(() => {
-        return () => {
-            reset();
-        };
+        const rejeitarSuccess = localStorage.getItem('rejeitarSuccess');
+        const avancarSuccess = localStorage.getItem('avancarSuccess');
+
+        if (rejeitarSuccess === 'true') {
+            toast.success('Pedido de orçamento rejeitado com sucesso.');
+            localStorage.removeItem('rejeitarSuccess');
+        }
+
+        if (avancarSuccess === 'true') {
+            toast.success('Situação do orçamento avançada com sucesso.');
+            localStorage.removeItem('avancarSuccess');
+        }
     }, []);
 
     return (
@@ -55,15 +58,56 @@ export default function Adicionar({auth, orcamento}: PageProps<{ orcamento: any 
                 <div className="row mb-4">
                     <div className="w-50 d-flex flex-row ">
                         <FontAwesomeIcon className="mx-sm-2 mt-lg-2 h3" icon={faHandshake}/>
-                        <h3 className="my-auto">Visualização de Orçamento</h3>
+                        {user.admin ?
+                            <h3 className="my-auto">Orçamento de {orcamento.usuarioDescription}</h3>
+                            :
+                            <h3 className="my-auto">Visualização de Orçamento</h3>
+                        }
                     </div>
 
                     <div className="w-50 d-flex flex-row-reverse">
-                        <BtnVoltar destino={'/orcamento'} auth={auth}/>
+                        {user.admin ?
+                            <div className="d-flex flex-nowrap">
+                                {orcamento.situacao === 1 ?
+                                    <Button
+                                        onClick={() => rejeitarOrcamento(orcamento.id)}
+                                        variant="danger"
+                                        className="shadow border d-flex justify-content-center align-items-center h-button mx-1"
+                                    >
+                                        <FontAwesomeIcon className="mt-lg-2 h6" style={{marginRight: '10px'}} icon={faTimes}/>
+                                        Rejeitar pedido
+                                    </Button>
+                                    : ''}
+
+                                {orcamento.situacao < 5 ?
+                                    <Button
+                                        onClick={() => avancarOrcamento(orcamento.id)}
+                                        variant="primary"
+                                        className="shadow border d-flex justify-content-center align-items-center h-button mx-1"
+                                        style={orcamento.situacao === 1 ? {background: "#02ad37"} : {}}
+                                    >
+                                        <FontAwesomeIcon className="mt-lg-2 h6" style={{marginRight: '10px'}} icon={orcamento.situacao === 1 ? faCheck : faAnglesRight}/>
+                                        {orcamento.situacao === 1 ? "Aprovar pedido" : "Avançar situação"}
+                                    </Button>
+                                    : ''}
+
+                                <Button
+                                    href={'/orcamento'}
+                                    variant="light"
+                                    className="shadow border-black border-1 border-opacity-25 d-flex justify-content-center align-items-center h-button mx-1"
+                                    style={{width: '115px'}}
+                                >
+                                    <FontAwesomeIcon className="mt-lg-2 h5" style={{marginRight: '10px'}} icon={faLeftLong}/>
+                                    Voltar
+                                </Button>
+                            </div>
+                            :
+                            <BtnVoltar destino={'/orcamento'} auth={auth}/>
+                        }
                     </div>
                 </div>
 
-                <Form noValidate validated={validated} onSubmit={submit}>
+                <Form>
                     <Row className="mb-3">
                         <Form.Group as={Col} md="12" controlId="descricao">
                             <Form.Label className='d-flex ml-2'>Descrição</Form.Label>
@@ -168,6 +212,29 @@ export default function Adicionar({auth, orcamento}: PageProps<{ orcamento: any 
                         </Form.Group>
                     </Row>
 
+                    {user.admin ?
+                        <div>
+                            <hr/>
+                            <h4 className="d-flex align-items-start ml-2 text-gray-500">{'Usuário'}</h4>
+
+                            <Container className="d-flex flex-nowrap p-0">
+                                <InputGroup className="flex-nowrap w-60 pr-2">
+                                    <InputGroup.Text className="disabled">E-mail:</InputGroup.Text>
+                                    <InputGroup.Text className="w-100">{usuario.email}</InputGroup.Text>
+                                </InputGroup>
+
+                                <InputGroup className="flex-nowrap w-30 pr-2">
+                                    <InputGroup.Text className="disabled">CPF:</InputGroup.Text>
+                                    <InputGroup.Text className="w-100">{usuario.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2}).*/, '$1.$2.$3-$4')}</InputGroup.Text>
+                                </InputGroup>
+
+                                <InputGroup className="flex-nowrap w-30 pr-2">
+                                    <InputGroup.Text className="disabled">Telefone:</InputGroup.Text>
+                                    <InputGroup.Text className="w-100">{usuario.telefone.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3')}</InputGroup.Text>
+                                </InputGroup>
+                            </Container>
+                        </div>
+                        : ''}
                 </Form>
             </Container>
         </GuestLayout>

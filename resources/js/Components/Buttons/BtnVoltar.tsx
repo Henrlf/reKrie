@@ -16,7 +16,7 @@ export default function BtnVoltar({destino}: PageProps<{ destino: string }>) {
                 variant="light"
                 className="shadow border-black border-1 border-opacity-25 d-flex justify-content-center align-items-center mt-1 h-button"
             >
-                <FontAwesomeIcon className="mt-lg-2 h5" style={{marginLeft: '1px', marginRight: '10px'}} icon={faLeftLong}/>
+                <FontAwesomeIcon className="mt-lg-2 h5" style={{marginRight: '10px'}} icon={faLeftLong}/>
                 Voltar
             </Button>
         </div>

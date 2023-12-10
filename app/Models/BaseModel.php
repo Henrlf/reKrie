@@ -58,4 +58,22 @@ class BaseModel extends Model
 
         return null;
     }
+
+    public function save(array $options = [])
+    {
+        $this->unsetDescription();
+
+        return parent::save($options);
+    }
+
+    public function unsetDescription()
+    {
+        foreach ($this->getAttributes() as $attribute => $value)
+        {
+            if (str_contains($attribute, 'Description'))
+            {
+                unset($this->$attribute);
+            }
+        }
+    }
 }

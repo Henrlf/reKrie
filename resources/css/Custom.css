@@ -94,6 +94,7 @@
     flex: 1;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    border-bottom: 0 !important;
 }
 
 .div-product-button-group {
@@ -183,19 +184,19 @@
     border-bottom-right-radius: 5px;
 }
 
-.div-resumo-carrinho{
+.div-resumo-carrinho {
     display: flex;
     flex-wrap: wrap;
     justify-content: end;
 }
 
-.div-resumo-carrinho .div-title{
+.div-resumo-carrinho .div-title {
     display: flex;
     width: 100%;
     justify-content: center;
 }
 
-.div-resumo-carrinho .div-totais{
+.div-resumo-carrinho .div-totais {
     display: flex;
     max-width: 18%;
     justify-content: left;
@@ -203,10 +204,10 @@
     color: #5c5c62;
 }
 
-.table-header-bg{
+.table-header-bg {
     background: #cecece !important;
 }
 
-.disabled{
+.disabled {
     background-color: #e7e7e7;
 }

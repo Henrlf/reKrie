@@ -4,9 +4,11 @@ import {Head} from "@inertiajs/react";
 import {Button, Container, Nav, Table} from "react-bootstrap";
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faHandshake, faPlus, faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
+import {faEye, faPenToSquare, faHandshake, faPlus, faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
 
 export default function Listagem({auth, orcamentos}: PageProps<{ orcamentos: any }>) {
+
+    const user = auth.user;
 
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
@@ -23,15 +25,16 @@ export default function Listagem({auth, orcamentos}: PageProps<{ orcamentos: any
                 <div className="row mb-4">
                     <div className="w-50 d-flex flex-row ">
                         <FontAwesomeIcon className="mx-sm-2 mt-lg-2 h3" icon={faHandshake}/>
-                        <h3 className="my-auto">Meus orçamentos</h3>
+                        <h3 className="my-auto"> {user.admin ? 'Orçamentos' : 'Meus orçamentos'}</h3>
                     </div>
 
                     <div className="w-50 d-flex flex-row-reverse">
                         <div className="btn-group">
-                            <Button href="/orcamento/adicionar" variant="success" className="shadow border d-flex justify-content-center align-items-center h-button" style={{background: "#02ad37"}}>
-                                <FontAwesomeIcon className="mt-lg-2 h6" style={{marginRight: '10px'}} icon={faPlus}/>
-                                Realizar orçamento
-                            </Button>
+                            {user.admin ? '' :
+                                <Button href="/orcamento/adicionar" variant="success" className="shadow border d-flex justify-content-center align-items-center h-button" style={{background: "#02ad37"}}>
+                                    <FontAwesomeIcon className="mt-lg-2 h6" style={{marginRight: '10px'}} icon={faPlus}/>
+                                    Realizar orçamento
+                                </Button>}
                         </div>
                     </div>
                 </div>
@@ -40,6 +43,7 @@ export default function Listagem({auth, orcamentos}: PageProps<{ orcamentos: any
                     <thead>
                     <tr>
                         <th className='table-header-bg w-5' style={{borderTopLeftRadius: '5px'}}></th>
+                        {user.admin ? <th className='table-header-bg'>Usuário</th> : ''}
                         <th className='table-header-bg'>Descrição</th>
                         <th className='table-header-bg w-10'>Valor</th>
                         <th className='table-header-bg w-20'>Situação</th>
@@ -52,9 +56,10 @@ export default function Listagem({auth, orcamentos}: PageProps<{ orcamentos: any
                         <tr key={i}>
                             <td className="justify-content-center">
                                 <Button href={"/orcamento/editar/" + orcamento.id} className="justify-content-center w-100" variant="primary" style={{borderRadius: '3px'}}>
-                                    <FontAwesomeIcon className="ml-0.5" icon={faEye}/>
+                                    <FontAwesomeIcon className="ml-0.5" icon={user.admin ? faPenToSquare : faEye}/>
                                 </Button>
                             </td>
+                            {user.admin ? <td>{orcamento.usuarioDescription}</td> : ''}
                             <td>{orcamento.descricao}</td>
                             <td>{'R$ ' + orcamento.valor.toFixed(2)}</td>
                             <td>{orcamento.situacaoDescription}</td>

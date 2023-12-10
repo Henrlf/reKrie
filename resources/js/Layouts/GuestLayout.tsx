@@ -71,7 +71,7 @@ export default function Guest({ user, children }: PropsWithChildren<{ user: any 
                         </Col>
                     </Row>
                     <hr className="bg-light" />
-                    <Row className="pt-2">
+                    <Row>
                         <Col className="text-center">
                             <p>&copy; 2023 ReKrie. Todos os direitos reservados.</p>
                         </Col>
@@ -204,9 +204,7 @@ function loggedAdminLayout(user: User) {
 
             <Nav className="justify-content-end" activeKey="1" onSelect={enventSelected}>
                 <NavDropdown title={user.name} menuVariant="dark">
-                    <NavDropdown.Item href="/">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="/">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="/">Something</NavDropdown.Item>
+                    <NavDropdown.Item href="/orcamento">Orçamentos</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/auth/logout" eventKey={0}>Sair</NavDropdown.Item>
                 </NavDropdown>
