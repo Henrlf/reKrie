@@ -46,13 +46,6 @@ export default function Listagem({auth, produtosCarrinho}: PageProps<{ produtosC
                                 <h6>Valor do frete: R$ 10,00</h6>
                             </div>
                         </div>
-
-                        <Separator/>
-
-                        <button className="btn btn-primary" onClick={() => handleFinalizarCompra()}>
-                            Finalizar compra
-                        </button>
-
                     </>
                 ) : (
                     <h4 className="mx-auto">Carrinho de compras vazio</h4>
