@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class Endereco extends BaseModel
 {
     protected $table = 'endereco';
@@ -35,5 +38,14 @@ class Endereco extends BaseModel
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id', 'idUsuario');
+    }
+    public static function findAllFromUser()
+    {
+        if (Auth::check()) {
+            $userId = Auth::id();
+            return DB::table('endereco')->where('idUsuario', '=', $userId)->get();
+        }
+
+        return null;
     }
 }
