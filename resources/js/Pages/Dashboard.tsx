@@ -14,7 +14,7 @@ export default function Dashboard({auth, produtos}: PageProps<{ produtos: any }>
     const [sortOption, setSortOption] = useState<'menor' | 'maior'>('menor');
 
     const addProdutoCarrinho = (idProduto: any) => {
-        axios.post(route('carrinhocompra.create', {idProduto: idProduto}))
+        axios.post(route('carrinhocompra.create', {idProduto: idProduto, quantidade: 1}))
             .then(response => {
                 toast.success('Produto adicionado ao carrinho de compras.');
             })

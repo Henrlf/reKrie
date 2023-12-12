@@ -10,6 +10,11 @@ import CardProdutoCarrinho from "@/Components/Cards/CardProdutoCarrinho";
 
 export default function Listagem({auth, produtosCarrinho}: PageProps<{ produtosCarrinho: any }>) {
 
+    const handleFinalizarCompra = () => {
+        // Adicione a lógica para finalizar a compra aqui
+        console.log("Compra finalizada!");
+    };
+
     return (
         <GuestLayout user={auth.user}>
             <Head title="Carrinho de compras"/>
@@ -37,10 +42,16 @@ export default function Listagem({auth, produtosCarrinho}: PageProps<{ produtosC
                                 </h3>
                             </div>
                             <div className="div-totais">
-                                <h6>Valor total: R$ 100,00</h6>
+                                <h6>{"Valor total: R$ " + produtosCarrinho.reduce((total: any, produto: any) => total + (produto.produtoPreco * produto.quantidade), 0)}</h6>
                                 <h6>Valor do frete: R$ 10,00</h6>
                             </div>
                         </div>
+
+                        <Separator/>
+
+                        <button className="btn btn-primary" onClick={() => handleFinalizarCompra()}>
+                            Finalizar compra
+                        </button>
 
                     </>
                 ) : (

@@ -19,7 +19,7 @@ class CarrinhoCompraController
 
         if ($carrinho)
         {
-            $carrinho->setAttribute('quantidade', ($carrinho->getAttribute('quantidade') + 1));
+            $carrinho->setAttribute('quantidade', ($carrinho->getAttribute('quantidade') + $request->get('quantidade')));
             $carrinho->save();
         }
         else
@@ -27,7 +27,7 @@ class CarrinhoCompraController
             $mappedData = [
                 'idUsuario' => $idUsuario,
                 'idProduto' => $idProduto,
-                'quantidade' => 1,
+                'quantidade' => $request->get('quantidade'),
             ];
 
             \App\Models\CarrinhoCompra::create($mappedData);
