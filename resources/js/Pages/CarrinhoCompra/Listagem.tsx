@@ -85,7 +85,7 @@ export default function Listagem({ auth, produtosCarrinho }: PageProps<{ produto
                 <Separator />
                 {produtosCarrinho.length ? (
                     <>
-                        {produtosCarrinho.map((produto: any) => (
+                        {produtosCarrinho.map((produto: { idCarrinho:never }) => (
                             <div key={"card_" + produto.idCarrinho} className="d-flex flex-row align-items-center">
                                 <input
                                     type="checkbox"
@@ -123,8 +123,8 @@ export default function Listagem({ auth, produtosCarrinho }: PageProps<{ produto
                     <Modal.Title>Detalhes da Compra</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>{userData.name}</p>
-                    <p>{userData.email}</p>
+                    <p>{auth.user.name}</p>
+                    <p>{auth.user.email}</p>
                     <p>Produtos Selecionados:</p>
                     {selectedProductsDetails.map((produto: any) => (
                         <div key={produto.idCarrinho} className="mb-3">
