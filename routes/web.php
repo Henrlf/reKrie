@@ -7,6 +7,7 @@ use App\Http\Controllers\CarrinhoCompraController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProfileController;
 use \App\Http\Controllers\OrcamentoController;
+use \App\Http\Controllers\FinalizarCompraController;
 use App\Models\Endereco;
 use App\Models\Material;
 use App\Models\Produto;
@@ -92,6 +93,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/usuario/endereco', function () {
     return Inertia::render('Endereco/Listagem', ['enderecos' => Endereco::findAllFromUser()]);
 })->middleware(['auth', 'verified'])->name('endereco.listagem');
+
+Route::get('/usuario/enderecos', function () {
+    $enderecos = Endereco::findAllFromUser();
+    return response()->json(['enderecos' => $enderecos]);
+})->middleware(['auth', 'verified'])->name('enderecos.listagem');
 
 Route::get('/usuario/endereco/adicionar', function () {
     return Inertia::render('Endereco/Adicionar');

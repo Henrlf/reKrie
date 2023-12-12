@@ -47,4 +47,11 @@ class EnderecoController extends Controller
 
         return Redirect::route("endereco.listagem");
     }
+
+    public function listarEnderecosUsuario()
+    {
+        $enderecos = auth()->user()->enderecos; // Certifique-se de que a relação 'enderecos' está definida no seu modelo de usuário
+
+        return response()->json(['enderecos' => $enderecos]);
+    }
 }
