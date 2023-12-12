@@ -42,7 +42,7 @@ export default function Listagem({auth, produtosCarrinho}: PageProps<{ produtosC
                                 </h3>
                             </div>
                             <div className="div-totais">
-                                <h6>{"Valor total: R$ " + produtosCarrinho.reduce((total: any, produto: any) => total + (produto.produtoPreco * produto.quantidade), 0)}</h6>
+                                <h6>{"Valor total: " + Number(produtosCarrinho.reduce((total: any, produto: any) => total + (produto.produtoPreco * produto.quantidade), 0)).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h6>
                                 <h6>Valor do frete: R$ 10,00</h6>
                             </div>
                         </div>
